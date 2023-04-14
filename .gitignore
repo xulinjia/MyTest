@@ -1,0 +1,7 @@
+/Library
+/.vs
+/UserSettings
+/Logs
+/*.csproj
+/MiniGame.sln
+/Assets/StreamingAssets
