@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RotateTest : MonoBehaviour
@@ -7,13 +8,19 @@ public class RotateTest : MonoBehaviour
     public GameObject Cube_Test;
     private void Awake()
     {
-        btn_test = transform.GetComponent<Button>();
-        btn_test.onClick.AddListener(OnStartButtonClick);
+        btn_test = transform.Find("btn_test").GetComponent<Button>();
+        btn_test.onClick.AddListener(OnRotateBtn);
+        btn_switchScene = transform.Find("btn_switchScene").GetComponent<Button>();
+        btn_switchScene.onClick.AddListener(onSwitchSceneBtn);
     }
 
-    private void OnStartButtonClick()
+    private void OnRotateBtn()
     {
         rotateFlag = !rotateFlag;
+    }
+    private void onSwitchSceneBtn()
+    {
+        SceneManager.LoadScene("SceneTest");
     }
     private void Update()
     {
@@ -24,6 +31,7 @@ public class RotateTest : MonoBehaviour
     }
 
     private Button btn_test;
+    private Button btn_switchScene;
     private bool rotateFlag = false;
     private int rotateSpeed = 2;
 }
