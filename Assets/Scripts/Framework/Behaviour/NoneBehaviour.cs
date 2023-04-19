@@ -3,7 +3,7 @@
 
 namespace GreyFramework
 {
-    class NoneBehaviour:MonoBehaviour
+    public class NoneBehaviour:MonoBehaviour
     {
         static public NoneBehaviour Create(string str)
         {

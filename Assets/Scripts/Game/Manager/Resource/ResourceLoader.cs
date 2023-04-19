@@ -99,6 +99,31 @@
                 Debug.LogError(m_Asset.name + " refCount:" + m_refCount);
             }
         }
+        public override void UnloadAsset()
+        {
+            if (m_Asset == null)
+            {
+                Debug.LogError("Asset is null");
+                return;
+            }
+            if (m_Type == typeof(GameObject))
+            {
+                m_Asset = null;
+                Resources.UnloadUnusedAssets();
+            }
+            else
+            {
+                Resources.UnloadAsset(m_Asset);
+                m_Asset = null;
+            }
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            m_Coroutine = null;
+
+        }
         private Coroutine m_Coroutine = null;
     }
 }

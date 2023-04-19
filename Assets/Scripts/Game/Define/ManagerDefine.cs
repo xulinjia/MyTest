@@ -10,6 +10,7 @@ namespace ErisGame
     {
         Net,
         Resource,
+        Event,
         Count,
     }
     public sealed class ManagerDefine

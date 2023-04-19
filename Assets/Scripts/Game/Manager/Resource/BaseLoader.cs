@@ -10,8 +10,28 @@
 
         public abstract void Unload();
 
+        public virtual bool CheckUnload()
+        {
+            if (m_LoadState == eLoadState.LoadComplete && m_refCount <= 0)
+            {
+                UnloadAsset();
+                m_LoadState = eLoadState.Unloaded;
+                return true;
+            }
+            return false;
+        }
 
+        public abstract void UnloadAsset();
 
+        public virtual void Dispose()
+        {
+            m_Type = null;
+            m_Path = null;
+            m_Asset = null;
+            m_LoadState = eLoadState.Invalid;
+            m_refCount = 0;
+            m_OnLoadCalls = null;
+        }
 
 
         protected string m_Path;

@@ -8,7 +8,8 @@ namespace ErisGame
 
     public sealed class Managers
     {
-        static public ResourceManager Recource
+
+        static private ResourceManager Recource
         {
             get
             {
@@ -19,6 +20,18 @@ namespace ErisGame
         static public ResourceManager GetResourceManager()
         {
             return Recource;
+        }
+        static private NetManager Net
+        {
+            get
+            {
+                return GameClient.Manager<NetManager>(eManager.Net);
+            }
+        }
+
+        static public NetManager GetNetManager()
+        {
+            return Net;
         }
     }
 
@@ -77,7 +90,7 @@ namespace ErisGame
             UnRegister(ref model);
             m_managerTypes.Add(model.Type);
             m_managers.Add(model);
-            model.Initialzation();
+            model.Initialization();
         }
         static public void UnRegister(ref IManager model)
         {

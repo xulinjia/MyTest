@@ -1,4 +1,4 @@
-using System;
+using ErisGame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +12,8 @@ public class RotateTest : MonoBehaviour
         btn_test.onClick.AddListener(OnRotateBtn);
         btn_switchScene = transform.Find("btn_switchScene").GetComponent<Button>();
         btn_switchScene.onClick.AddListener(onSwitchSceneBtn);
+        btn_testLogin = transform.Find("btn_testLogin").GetComponent<Button>();
+        btn_testLogin.onClick.AddListener(onTestLoginBtn);
     }
 
     private void OnRotateBtn()
@@ -21,6 +23,10 @@ public class RotateTest : MonoBehaviour
     private void onSwitchSceneBtn()
     {
         SceneManager.LoadScene("SceneTest");
+    }
+    private void onTestLoginBtn()
+    {
+        Managers.GetNetManager();
     }
     private void Update()
     {
@@ -32,6 +38,7 @@ public class RotateTest : MonoBehaviour
 
     private Button btn_test;
     private Button btn_switchScene;
+    private Button btn_testLogin;
     private bool rotateFlag = false;
     private int rotateSpeed = 2;
 }

@@ -29,6 +29,16 @@ namespace ErisGame
         private static Dictionary<string, Type> m_assetTypeDic = new Dictionary<string, Type>()
         {
             {".prefab",typeof(GameObject)},
+            {".png",typeof(Sprite)},
+            {".jpg",typeof(Sprite)},
+            {".spriteatlas",typeof(UnityEngine.U2D.SpriteAtlas)},
+            {".wav",typeof(AudioClip)},
+            {".mp3",typeof(AudioClip)},
+            {".ogg",typeof(AudioClip)},
+            {".asset",typeof(ScriptableObject)},
+            {".mp4",typeof(UnityEngine.Video.VideoClip)},
+            {".shader",typeof(Shader)},
+            {".mat",typeof(Material)},
 
         };
     }

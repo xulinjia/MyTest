@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace TklGame
+namespace GreyFramework
 {
     public class EnumHome
     {
