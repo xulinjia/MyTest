@@ -24,17 +24,17 @@ namespace ErisGame
         }
         public async void TryConnect() 
         {
-            ClientWebSocket ws = new ClientWebSocket();
-            CancellationToken ct = new CancellationToken();
-            // add header
-            //ws.Options.SetRequestHeader("X-Token", "eyJhbGciOiJIUzI1N");
-            Uri url = new Uri("ws://localhost:4649/Chat");
-            await ws.ConnectAsync(url, ct);
         }
         public async void SendWebSocketRequest()
         {
             try
             {
+                ClientWebSocket ws = new ClientWebSocket();
+                CancellationToken ct = new CancellationToken();
+                // add header
+                //ws.Options.SetRequestHeader("X-Token", "eyJhbGciOiJIUzI1N");
+                Uri url = new Uri("ws://localhost:4649/Chat");
+                await ws.ConnectAsync(url, ct);
 
                 await ws.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes("hello")), WebSocketMessageType.Binary, true, ct);
                 while (true)
