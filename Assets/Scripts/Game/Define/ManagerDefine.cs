@@ -9,6 +9,7 @@ namespace ErisGame
     public enum eManager
     {
         Net,
+        Httper,
         Resource,
         Event,
         Count,
@@ -23,6 +24,10 @@ namespace ErisGame
                     return new NetManager();
                 case eManager.Resource:
                     return new ResourceManager();
+                case eManager.Httper:
+                    return new HttperManager();
+                case eManager.Event:
+                    return new EventThreadManager();
                 default:
                     break;
             }
