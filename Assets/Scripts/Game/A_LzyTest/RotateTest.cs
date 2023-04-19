@@ -1,4 +1,5 @@
 using ErisGame;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,17 +9,20 @@ public class RotateTest : MonoBehaviour
     public GameObject Cube_Test;
     private void Awake()
     {
+        sengText = transform.Find("sengText").GetComponent<TMP_Text>();
         btn_test = transform.Find("btn_test").GetComponent<Button>();
-        btn_test.onClick.AddListener(OnRotateBtn);
+        btn_test.onClick.AddListener(OnTestBtn);
         btn_switchScene = transform.Find("btn_switchScene").GetComponent<Button>();
         btn_switchScene.onClick.AddListener(onSwitchSceneBtn);
         btn_testLogin = transform.Find("btn_testLogin").GetComponent<Button>();
         btn_testLogin.onClick.AddListener(onTestLoginBtn);
     }
 
-    private void OnRotateBtn()
+    private async void OnTestBtn()
     {
-        rotateFlag = !rotateFlag;
+        //rotateFlag = !rotateFlag;
+        string sendMsg = sengText.text;
+        await Managers.GetNetManager().SendMessage(sendMsg);
     }
     private void onSwitchSceneBtn()
     {
@@ -26,7 +30,7 @@ public class RotateTest : MonoBehaviour
     }
     private void onTestLoginBtn()
     {
-        Managers.GetNetManager();
+        Managers.GetNetManager().TryConnect("",0);
     }
     private void Update()
     {
@@ -39,6 +43,7 @@ public class RotateTest : MonoBehaviour
     private Button btn_test;
     private Button btn_switchScene;
     private Button btn_testLogin;
+    private TMP_Text sengText;
     private bool rotateFlag = false;
     private int rotateSpeed = 2;
 }
