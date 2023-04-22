@@ -1,0 +1,1191 @@
+syntax = "proto3";
+package cliAllEnum;
+
+enum ItemType{
+	Item_None = 0;
+	Item_Sub_Coin = 1;//金币
+	Item_Sub_Jewel = 2;//钻石
+	Item_Power = 3;//体力
+	Item_Equipment = 4;//装备
+	Item_Prop = 5;//道具
+	Item_Material = 6;//材料
+	Item_Sub_Weapon = 7;//武器
+	Item_Sub_Cloth = 8;//衣服
+	Item_Sub_Shoe = 9;//鞋子
+	Item_Sub_Pants = 10;//裤子
+	Item_HeroChip = 11;//碎片
+	Item_Gem = 12;//宝石
+	Item_God_Weapon = 13;//神器
+	Item_Sub_ValuableBox = 14;//宝箱
+	Item_Sub_HomeCoin = 15;//家园币
+	Item_HomeStar = 16; //家园星星
+	Item_Hero = 21;//英雄
+	Item_Exp = 22;//玩家经验
+	Item_Sub_StampBox = 23;//印记盒子
+	Item_Stamp = 24;//印记
+	Item_Sub_PowerDrug = 25;//体力丹
+	Item_KaiTianPai = 26;//开天牌
+	Item_KaiTianCoin = 27;//开天币
+	Item_Currency = 28;//货币
+	Item_DailyActive = 29;//今日活力值
+	Item_Home = 30;//家园道具
+	Item_God_Weapon_Chip = 31;//神器碎片
+	Item_Sub_ShenQiCoin = 32;//神器币
+	Item_Sub_ShuJianCoin = 33;//书简币
+	Item_Book = 34;//秘籍
+	Item_Sub_Guild_Coin = 35;//学分
+	Item_GuildMoney = 36;//公会资金
+	Item_SevenActive = 37;//7日活力值
+  	Item_FourteenActive = 38;//14日活力值
+	Item_NotUse = 39;//无用的道具 主要用于显示(比如御魔牌+1)
+	//Item_Atmosphere = 40;//宴会气氛值
+	Item_Guild_Prestige = 41;//学社威望
+	Item_SanXiao_Medal = 42;//消除宝典勋章
+	Item_PartyCelebrationCard = 43;//家宴庆功券
+	Item_HeroSkin = 44;//英雄皮肤
+	Item_PlayerSkin = 45;//主角皮肤
+	Item_VIP_EXP = 46;//VIP经验值
+	Item_Home_Crops = 47;//农田农作物
+	Item_Title = 48;//称号
+	Item_PlayerIcon = 49;//头像
+	Item_PlayerIconFrame = 50;//头像框
+	Item_Gift = 51;//礼物
+	Item_Sub_GM_YueKa = 52;//GM物品 相当于月卡充值成功
+	Item_Sub_GM_ZhanLing = 53;//GM物品 相当于战令充值成功
+	Item_Handcard=54;//手牌
+}
+
+
+enum ItemQuality{
+	IQuality_None = 0;
+	IQuality_White = 1;//白
+	IQuality_Green = 2;//绿
+	IQuality_Blue = 3;//蓝
+	IQuality_Purple = 4;//紫
+	IQuality_Orange = 5;//橙
+	IQuality_Red = 6;//红
+	IQuality_Colorful = 7;//彩色
+}
+
+enum HeroQuality{
+	HQuality_None = 0;
+	HQuality_A = 1;
+	HQuality_S = 2;
+	HQuality_SS = 3;
+	HQuality_SSS = 4;
+}
+
+enum HeroType{
+	HType_None = 0;
+	HType_Attack = 1; //攻击者
+	HType_Defence = 2; //防御
+	HType_Assist = 3; //辅助
+	HType_Control = 4; //控制
+}
+
+//属性公式系数
+enum AttrFormulaCoe{
+	AFC_None = 0;
+	AFC_EquipmentLv = 1; //装备等级
+	AFC_Star = 2; //星数
+	AFC_HeroLv = 3; //英雄等级
+	AFC_God_Lv = 4; //神器等级
+	AFC_God_HQuality = 5;//神器对应的英雄品质
+}
+
+//抽卡类型
+enum DrawCard{
+	DrawCard_None = 0;
+	DrawCard_Ten = 1; //十连抽
+	DrawCard_One = 2; //单抽
+	DrawCard_Frist = 3;//首单抽
+	DrawCard_Frist_Ten = 4;//首10连抽
+}
+
+//PVE关卡类型 
+enum PVEType{
+	PVEType_None = 0;
+	PVEType_Normal = 1;//正常推图PVE
+	PVEType_ClimbTower = 2;//爬塔类型的PVE
+	PVEType_Arena = 3;//竞技场 PVP
+	PVEType_LieZhuan = 4;//列传·
+	PVEType_Ring_QL = 5;//擂台 青龙 空桑战区
+	PVEType_Ring_XW = 6;//擂台 玄武 黄泉战区
+	PVEType_Ring_BH = 7;//擂台 白虎 青丘战区
+	PVEType_Ring_ZQ = 8;//擂台 朱雀 大漠战区
+	PVEType_Expedition = 9;//远征
+	PVEType_Trial = 10;//试炼
+	PVEType_Friend = 11;//好友对战
+	PVEType_GuildBoss = 12;//公会BOSS
+	PVEType_Arena_Defence = 13;//竞技场防守 只三消不战斗
+	PVEType_Assist = 14;//协助副本
+	// PVEType_SanXiaoBaoDian = 15;//消除宝典
+	PVEType_Adventure = 16;//奇遇
+	PVEType_LieZhuan_Hard = 19;//列传(困难)·
+	//PVEType_Arena_Defence = 15;//竞技场防守 只三消不战斗
+	PVEType_PVPType_SanXiao = 26;//寰天星盘 的三消
+	PVEType_GuardBoss = 27;//学社镇守BOSS
+	PVEType_Descent = 28;//种族塔
+	PVEType_HomePartyRobber = 24;//家宴 强盗
+	PVEType_ShangGuYiJi = 29;//上古遗迹
+	PVEType_LieZhuan_VeryHard = 30;//列传(地狱)·
+
+	PVEType_SanXiaoBaoDian_Normal = 31;//消除宝典 - 主线
+	PVEType_SanXiaoBaoDian_ClimbTower = 32;//消除宝典 - 爬塔
+	PVEType_SanXiaoBaoDian_LieZhuan = 33;//消除宝典 -- 心魔
+	PVEType_SanXiaoBaoDian_ShangGuYiJi = 34;//消除宝典 -- 上古遗迹
+	
+	PVEType_WorldMatch = 35;//跨服匹配赛
+
+}
+
+enum Sex
+{
+	Sex_None = 0;
+	Sex_Man = 1;
+	Sex_Woman = 2;
+}
+
+enum MailTarget
+{
+	MailTarget_None =0;
+	MailTarget_ALL = 1;//全服
+	MailTarget_Player = 2;//私人
+}
+
+//保存的阵容类型 
+enum EmbattleType{
+	EmbattleType_None = 0;
+	EmbattleType_PVE = 1;//正常推图PVE
+	EmbattleType_ClimbTower = 2;//爬塔类型的PVE
+	EmbattleType_Arena = 3;//竞技场 PVP 防守方阵容
+	EmbattleType_LieZhuan = 4;//列传阵容
+	EmbattleType_Ring_QL = 5;//擂台 青龙
+	EmbattleType_Ring_XW = 6;//擂台 玄武
+	EmbattleType_Ring_BH = 7;//擂台 白虎
+	EmbattleType_Ring_ZQ = 8;//擂台 朱雀
+	EmbattleType_Expedition = 9;//远征 
+	EmbattleType_Trial = 10;//试炼 
+	EmbattleType_GuildBoss = 11;//公会BOSS 
+	EmbattleType_Arena_AT = 12;//竞技场 攻击整容PVP
+	EmbattleType_Assist = 13;//协助副本
+	//EmbattleType_Arena_AT = 14;//竞技场 攻击整容PVP
+	EmbattleType_Adventure = 20;//奇遇
+	EmbattleType_GuardBoss_Offensive = 21;//学社镇守BOSS 攻方
+	EmbattleType_GuardBoss_Defensive = 22;//学社镇守BOSS 守方
+	EmbattleType_Descent = 23;//种族塔
+	EmbattleType_ShangGuYiJi = 29;//上古遗迹
+	EmbattleType_WorldMatch = 30;//跨服匹配
+
+}
+
+
+//技能类型
+enum SkillType{
+	SkillType_NONE = 0;
+	SkillType_DEFAULT = 1;//英雄怒气技
+	SkillType_GIFT = 2;//天赋技
+	SkillType_TURNBASED = 3;//回合技
+}
+
+//邮件的状态
+enum MailStatus{
+	MailStatus_NONE = 0;
+	MailStatus_NoRead = 1;//未读
+	MailStatus_Read = 2;//已读
+	MailStatus_GetItem = 3;//已领取
+	MailStatus_Remove = 4;//邮件删除
+}
+
+//商店类型
+enum GeneralStoreType{
+	GeneralStoreType_NONE = 0;
+	GeneralStoreType_Normal = 1;//普通商店
+	GeneralStoreType_Guild = 2;//公会商店
+	GeneralStoreType_Arena = 3;//竞技场商店
+	GeneralStoreType_XinYin = 5;//心意商店
+	GeneralStoreType_ZhuZaoCoin = 6;//铸造商店
+	GeneralStoreType_GodWeapon = 7;//神器商店
+	GeneralStoreType_ShiLian = 8;//试炼商店
+	GeneralStoreType_Skin = 9;//皮肤商店
+	
+	GST_ZhuZaoCoin_Rand = 10;//个人 随机铸造币商店
+	GST_GodWeapon_Rand = 11;//个人 随机神器商店
+	GST_YingHun_Rand = 12;//个人 随机英魂商店 (幻灵商店)
+	GST_XinYin_Rand = 14;//个人 随机心意商店
+	GST_Guild_Rand = 15;//个人 公会商店
+	
+	GeneralStoreType_FightSevenDayRankActivity = 16;//决战山海商店
+	
+	GeneralStoreType_MingGeActivity = 17;
+	GeneralStoreType_YMPActivity = 18;
+	GeneralStoreType_Gift = 19;//礼物商店
+}
+
+
+//家园商店类型
+enum HomeStoreType{
+	HomeStoreType_NONE = 0;
+	HomeStoreType_Normal = 1;//通用商店
+	HomeStoreType_JiaJu = 2;//家具商店
+	HomeStoreType_BaiShe = 3;//摆设商店
+	HomeStoreType_YingZhuang = 4;//硬装商店
+}
+
+//成就类型
+enum AchievementType{
+	AchievementType_None = 0;
+	AchievementType_ChongJi = 1;//冲级达人
+	AchievementType_PVE = 2;//PVE通关
+	AchievementType_ConsumePower = 3;
+}
+
+//战报类型
+enum BattleReportType{
+	BattleReportType_NONE = 0;
+	BattleReportType_Self = 1;//个人
+	BattleReportType_AllSrv = 2;//全服
+}
+
+//任务或成就当前状态
+enum QuestState{
+	QuestState_NONE = 0;
+	QuestState_NoFinish = 1;//为完成
+	QuestState_Finish = 2;//已完成
+	QuestState_AlreadyGetAward = 3;//已领取奖励
+	QuestState_Over = 4;//到头了
+}
+
+//除了正常类型 其他的都是有特殊逻辑的
+enum MailType{
+	MailType_None = 0;
+	MailType_Normal = 1;
+	MailType_ArenaRank = 2;//竞技场每日排行奖励
+	MailType_GuildBroadcast = 3;// 公会群发
+	MailType_ArenaSeasonAward = 4;//竞技场赛季奖励
+	MailType_Trial = 5;//无尽试炼
+	MailType_GuildBoss = 6;//公会BOSS
+	MailType_GM= 7;//GM发送
+	MailType_RingDailyAward_QL = 8;//擂台每日奖励
+	MailType_RingDailyAward_XW = 9;//擂台每日奖励
+	MailType_RingDailyAward_BH = 10;//擂台每日奖励
+	MailType_RingDailyAward_ZQ = 11;//擂台每日奖励
+	MailType_GuardBossRank = 12;//学社镇守BOSS 伤害排名奖励
+	MailType_GuardBoss = 13;//学社镇守BOSS 胜负奖励
+	MailType_SevenDayRank_GuardBoss = 14;//决战山海 - 镇守榜
+	MailType_SevenDayRank_ShangGu = 15;//决战山海 - 福地榜
+	MailType_SevenDayRank_XinMo = 16;//决战山海 - 心魔榜
+	MailType_SevenDayRank_FightingNum = 17;//决战山海 - 战力涨幅榜
+	MailType_SevenDayRank_MingGeScore = 18;//决战山海 - 命格涨幅榜
+	MailType_SevenDayRank_KaiTaiPaiScore = 19;//决战山海 - 御魔涨幅榜
+	MailType_GuildWeekContributionRankAward = 20;// 公会周贡献排名奖励 
+	MailType_SevenDayRank_MeiLiScore = 21;//决战山海 - 魅力涨幅榜
+	MailType_SevenDayRank_DrawCardCount = 22;//决战山海 - 补天涨幅榜
+
+}
+
+//公会职务
+enum GuildJobType{
+	JobType_None = 0;
+	JobType_President = 1; // 会长
+	JobType_VicePresident = 2;//副社长
+	JobType_Elder = 3;//长老
+	JobType_Stargazer = 4;//占星师
+	JobType_Elite = 5;//精英
+	JobType_Member = 6;//成员
+	JobType_Max = 7;
+}
+
+enum GuildMemberState{
+	GuildMemberState_None = 0;
+	GuildMemberState_Join = 1; // 加入
+	GuildMemberState_Leave = 2;//退出
+	GuildMemberState_Kick = 3;//被踢
+	GuildMemberState_Disband = 4;//解散
+}
+
+//DayTimes 配置的枚举类型
+enum DatTimesType{
+	DatTimesType_None = 0;
+	DT_POWER_RECOVERY = 1;//体力恢复
+	DT_ARENA_FREE_TIMES = 2;//竞技场次数
+	DT_CHOUKA_FREE = 3; //免费抽卡
+	DT_KaiTianPai_FREE = 4;//开天牌
+	DT_DAILY_ACTIVE = 5;//每日任务活跃
+	DT_REJOIN_GUILD = 6;//重新加入公会CD
+	DT_EXPEDITION_CHALLENGE = 7;//远游挑战次数
+	DT_DAIXIAO_REQ_NUM = 9;//每日代消请求的次数
+	DT_DAIXIAO_GET_AWARD = 10;//代消每日领取次数
+	DT_HOME_VISIT = 11; // 每日家园拜访次数
+	DT_BUY_POWER_COUNT = 12;//每日体力限购次数
+	DT_GUILD_BOSS = 13;//公会Boss
+	DT_HOME_ADVENTURE = 14;//家园奇遇次数
+	DT_HOME_FARM = 15;//家园种地次数
+	DT_HOME_FARM_FRIEND = 16;//家园帮助好友种地次数
+	DT_ARENA_REFRESH_TIMES = 17;
+	DT_BUY_ARENA_CHALLENGE_TIMES = 18;
+	DT_BUY_CHOUKA=19; //每日购买抽卡券次数
+	DT_BUY_CHOUKA_TEN= 20;//每日购买十连抽卡券次数
+	DT_CHOUKA_LIMIT = 21;//每日抽卡的上限
+	DT_QL_RING_FREE_TIMES = 22;//青龙擂台每日免费挑战次数
+	DT_XW_RING_FREE_TIMES = 23;//玄武擂台每日免费挑战次数
+	DT_BH_RING_FREE_TIMES = 24;//白虎擂台每日免费挑战次数
+	DT_ZQ_RING_FREE_TIMES = 25;//朱雀擂台每日免费挑战次数
+	DT_GUILD_DONATION_TIMES = 26;//公会每日捐献次数限制
+	DT_BUY_GUILD_BOSS = 27;//每日购买公会Boss挑战次数
+	DT_HOME_PARTY_HOLD_DAY_COUNT = 28;//家园家宴每日举办次数
+	DT_HOME_PARTY_HOLD_WEEK_COUNT = 29;//家园家宴每周举办次数
+	DT_HOME_PARTY_JOIN_COUNT = 30; // 家园家宴每日吃席次数
+	DT_GUARD_INTERACTE_FREE_NUM=31;//镇守交互行为 每日免费次数
+	DT_REV_FRIEND_POINT = 32;//友情点接收次数
+	DT_SHANGGU_SHORTCUR_AWARD = 33;//上古遗迹快捷奖励
+	DT_TOWER_CHALLENGE_TIMES=34;//爬塔每日挑战次数
+	DT_QIFU_TIMES=35;//祈福每日次数
+	DT_HOME_FARM_INVITE = 36;//每日家园种田邀请次数
+	DT_ROLL_MONEY_TREE_TIMES = 37;//摇钱树每日次数
+	DT_ROLL_MONEY_TREE_FREE_TIMES = 38;//摇钱树每日免费次数
+	DT_GUILD_GUARD_WORSHIP_NUM = 39;//学社镇守每日膜拜次数
+	DT_ASSIST_PASS_TIMES=40;//协助副本每日最多占领次数
+	DT_ASSIST_SWEEP_TIMES=41;//协助副本每日最多扫荡次数
+	DT_ASSIST_HELPAWARD_TIMES=42;//协助副本每日最多获得协助奖励次数
+	DT_PHOTO_LIKE_COUNT = 43; // 相片每日点赞次数
+}	
+
+//任务条件枚举
+enum QuestConditionType{
+	QuestConditionType_None = 0;
+	QCT_PlayerDailyLogin = 1;//每天登陆游戏
+	QCT_PlayerLv = 2;//玩家达到{}级
+	QCT_ConsumePower = 3;//累计消耗体力{}点
+	QCT_ChallengePVENum = 4;//剧情副本挑战{}次
+	QCT_PVEClear = 5;//玩家通过{}关
+	QCT_ChallengeArenaNum = 6;//竞技场挑战{}次
+	QCT_ClimbTowerLayer = 7;//爬塔层数达到第{}层
+	QCT_ClimbTowerOne = 8;//爬塔过一次
+	QCT_HomeUnlockArea = 9;//家园解锁区域
+	QCT_HomeBuildUp = 10;//家园建筑升级
+	QCT_HomePlace = 11;//家园放置
+	QCT_SomeFXLv = 12;//{para1}个职业升到{para2}级
+	QCT_SomeHeroSatr = 13;//拥有{para1}个{para2}星（或以上）幻灵  [拼写错误]
+	QCT_SomeHeroInitQuality = 14;//拥有{para1}个初始{para2}品质（或以上）的幻灵
+	QCT_PlayerStar = 15;//主角达到{}星（或以上）
+	QCT_PlayerQuality = 16;//主角达到{}品（或以上）
+	QCT_FXSuitEquipmentSlotLv = 17;//{para1}个职业装备升级1套至{para2}级
+	QCT_FXSuitEquipmentQuality = 18;//{para1}个职业穿戴1套{para2}色（或以上）品质装备
+	
+	QCT_LieZhuanClear = 19;//通过心魔{para1}关
+	QCT_DrawCardCount = 20;//累计抽卡{para1}次
+	QCT_ConsumeJewelCount = 21;//累计消耗{para1}元宝
+	QCT_ConsumeCoinCount = 22;//累计消耗{para1}铜币
+	QCT_UsePowerDrugCount = 23;//累计复用{para1}体力包子
+	QCT_ArenaMaxRank = 24;//竞斗场最高达到{para1}名
+	QCT_LoginDayCount = 25;//累计登录游戏{para1}天
+	QCT_BuyPowerCount = 26;//累计购买{para1}次体力
+	QCT_FinishDailyQuest = 27;//累计完成{para1}次日常任务
+	QCT_FinishAchievement = 28;//累计达成{para1}次成就
+	QCT_WinBattleCount = 29;//累计战斗胜利{para1}次
+	QCT_NotWinBattleCount = 30;//累计战斗失败{para1}次
+	QCT_HistorySanXiaoCount = 31;//累计进行消除{para1}次
+	QCT_PVEEmbattleFightPower = 32;//上阵战力达到{para1}
+	QCT_ActiveMainPlayerSkillCount = 33;//累计获得{para1}个主角技能
+	QCT_ContinuousOnlineTS = 34;//连续在线时长达到{para1}分钟
+	QCT_GameTime = 35;//游戏累计时长达到{para1}小时
+	QCT_ActiveFetterCount = 36;//总共达成{para1}个幻灵羁绊
+	QCT_GetKaiTianPaiCount = 37;//累计获得{para1}张御魔牌
+	QCT_NormalQuestGroupID = 38;//目标指引完成达到第{para1}回
+	QCT_ActiveHandbookCount  = 39;//累计激活{para1}次图鉴 
+	QCT_HandbookLv = 40;//图鉴等级达到{para1}级
+	QCT_SellKTCount = 41;//累计分解{para1}张御魔牌
+	QCT_KTSlotCount = 42;//开启{para1}个御魔牌槽位
+	QCT_ExpeditionCount =43;//进行{para1}次远征
+	QCT_PerfectExpeditionCount =44;//进行{para1}次完美远征（全通）
+	QCT_TrialCount = 45;//进行{para1}次无尽试炼
+	QCT_TrialMaxLevelID = 46;//无尽试炼最大达到{para1}关
+	QCT_EquipGem = 47;//共鸣总共镶嵌{para1}个{para2}级的珠玉（宝石）
+	QCT_Ring_Rank = 48;//空桑战区结算时处于第X名
+	QCT_Ring_Keep_Rank = 49;//空桑战区连续X天结算时都为第X名
+
+	// 消除宝典任务
+	QCT_SCBD_GradeCount = 50; // 累计获得{para1}次，角色全{para2}阶强化
+	QCT_SCBD_DaiXiaoCount = 51; // 累计协助其他人消除，被成功采用{para1}次
+	QCT_SCBD_FinishRemainStep = 52; // 累计{para1}关达成全部目标且剩余步数>{para2}(关卡不能重复)
+	QCT_SCBD_FinishFinalStep = 53; // 累计{para1}关在最后1步达成全部目标
+	QCT_SCBD_LevelPassCount = 54; // 累计通过{para1}关
+	QCT_SCBD_BOOM_TG = 55; // 累计制作{para1}个田字连技能
+	QCT_SCBD_BOOM_TL = 56; // 累计制作{para1}个L/T连技能
+	QCT_SCBD_BOOM_XY = 57; // 累计制作{para1}个四连技能
+	QCT_SCBD_BOOM_F = 58; // 累计制作{para1}个五连技能
+	QCT_SCBD_GRASS = 59; // 累计消除花丛{para1}个
+	QCT_SCBD_WOOD = 60; // 累计消除木箱{para1}个
+	QCT_SCBD_STONE = 61; // 累计消除石块{para1}个
+	QCT_SCBD_CORAL = 62; // 累计消除泥砖{para1}个
+	QCT_SCBD_ICE = 63; // 累计消除冰块{para1}个
+	QCT_SCBD_ElfCount = 64; // 累计获得{para1}个星君
+	QCT_SCBD_CRYSTAL = 65; // 累计消除{para1}个水晶
+	QCT_SCBD_BUBBLE = 66; // 累计消除{para1}个泡泡
+	QCT_SCBD_BlockCount = 67; // 累计消除{para1}个珠子
+	QCT_SCBD_TotalSkillCount = 68; // 累计总技能数量{para1}个
+
+	QCT_HomeHotelPlace = 70;//家园旅馆放置建筑
+	
+	QCT_PlayerSomeSkillLv = 71; // 主角技能等级  {para1}个技能达到{para2}级
+	QCT_PlayerSkillBookCount = 72;//累计激活{para1}本秘籍
+	QCT_PlayerSomeSkillBookLv = 73;//{para1}本秘籍达到{para2}级
+	QCT_SomeHeroDescentCount = 74;//拥有{para1}个{para2}种族的幻灵（无论主副）
+	QCT_FXGradeUp = 75;//{para1}个幻灵突破到＋{para2}
+	QCT_SomeHeroPotentailLv = 76;//{para1}个幻灵潜能单体等级{para2}
+	QCT_CampLv = 77;//营地达到{para1}级
+	QCT_KangMiePointCount = 78;//抗灭投入{para1}点数
+	QCT_CampPlaceHeroStar = 79;//{para1}个营地放置{para2}个{para3}星幻灵
+	
+	QCT_JoinGuildCount = 80;//加入{para1}个学社
+	QCT_CreateGuildCount = 81;//创建{para1}个学社
+	QCT_QuitGuild_InitiativeCount = 82;//{para1}次主动退出学社
+	QCT_GuildKickCount = 83;//作为管理踢出{para1}个人
+	QCT_KickCountByGuild = 84;//{para1}次被踢出学社
+	QCT_GuildStoreBuyCount = 85;//学社商店购买{para1}次数
+	QCT_GuildGuardCount = 86;//学社镇守数量到达{para1}个（取历史最大数量）
+	QCT_GuildAuctionGetItem = 87;//学社拍卖获得道具{para1}数
+	QCT_GuildAuctionConsumeJewel = 88;//学社拍卖花费元宝{para1}数
+	QCT_GuildBuildingLevelUp = 89;//学社{para1}建筑到达{para2}级
+	QCT_GuildBossLevel = 90;//学社妖兽通过难度第关（按最快进度取） --学社妖兽通过第{para1}关（按最快进度取）
+	QCT_FinishGuildQuest = 91;//学社任务完成{para1}数量
+	QCT_GuildDonateCount = 92;//学社捐献{para1}次
+	QCT_GuildBossCount = 93;//参与学社妖兽{para1}次
+	QCT_LieZhuanCount = 94;//心魔挑战{para1}次
+	QCT_RingApplyCount = 95;//擂台报名{para1}次数
+	
+	QCT_GuardBossCount = 96;//参与学社镇守{para1}次数（战斗）
+	QCT_GuardOffer = 97;//学社镇守交互：友好行为{para1}次
+	QCT_GuardTempt = 98;//学社镇守交互：离间行为{para1}次
+	QCT_DaiXiaoCount = 99;//累计消除求助{para1}次
+	QCT_HelpDaiXiaoCount = 100;//累计消除求助{para1}次
+	QCT_WorldChatCount = 101;//在世界频道聊天次数
+	QCT_HomePlaceCount = 102;//家园家具放置的{para1}次数
+
+	QCT_Rank_FightingNum = 103; // 战力达到{para1}
+	QCT_Rank_SanXiaoScore = 104; // 消除积分达到{para1}
+	QCT_Rank_ChapterLevel = 105; // 通关{para1}关
+	QCT_Rank_TowerLevel = 106; // 通关爬塔{para1}关
+	QCT_Rank_LieZhuanLevel = 107; // 通关心魔{para1}关
+	QCT_Rank_LiezhuanHardLevel = 108; // 通关心魔{para1}关
+	QCT_Rank_ShangGuLevel = 109; // 通关上古遗迹{para1}关
+	
+	
+	QCT_ShangGuLevel = 110; // 上古遗迹通关第para1关
+	QCT_ShangGuLevelCount = 111; // 上古遗迹挑战para1次
+	QCT_HeroOriQualityToNewQuality = 112; // 有para1个初始para2品质的幻灵升至para3品质
+	QCT_HeroOriQualityToStar = 113; // 有para1个初始para2品质的幻灵升星至para3星
+	QCT_KTShopRefreshCount = 114; // 御魔坊刷新para1次
+	QCT_HelpGuildMemberSanXiao = 115;//协助学社成员消除para1次
+	QCT_GuildChatCount = 116; //学社频道聊天para1次
+	
+	QCT_OpenPartyCount = 117; //开启para1次宴会
+	QCT_JoinPartyCount = 119; //参加para1次宴会
+	QCT_ZhuZaoStoreRefreshCount = 120; //铸造商店刷新para1次
+	QCT_GodWeaponStoreRefreshCount = 121;//命格商店刷新para1次
+	QCT_YingHunStoreRefreshCount = 122;//魂商店刷新para1次
+	
+	QCT_ZhuZaoStoreBuyCount = 123;//铸造商店购买para1次
+	QCT_GodWeaponStoreBuyCount = 124;//命格商店刷新para1次
+	QCT_YingHunStoreBuyCount = 125;//幻魂商店购买para1次
+	QCT_ArenaStoreBuyCount = 126;//功勋商店购买para1次
+	
+	QCT_ShangGuGetShortcutAward = 127;//上古遗迹领取挂机奖励para1次
+	QCT_FarmCount = 128;//进行一次种地
+	QCT_OtherFarmCount = 129;//在他人家中进行一次种地
+	
+	QCT_Hero_StarUp = 130; // 幻灵升至para1星
+	QCT_Hero_SkillUp = 131; // 幻灵para1技能升级至para2级
+	QCT_Hero_KaiTianPaiSkillNum = 132; // 幻灵装备para1个御魔技能
+	QCT_Hero_EquipmentNum = 133; // 幻灵穿戴para1件para2品质的装备
+	QCT_Hero_GodWeaponLevel = 134; // 幻灵装备para1等级的命格
+	
+	QCT_Guild_MemberCount = 135; // 学社历史最大成员达到para1人
+	QCT_Guild_MaxMoney = 136; // 学社历史最大资金达到para1
+	QCT_Guild_Level = 137; // 周期内学社等级达到para1级
+	QCT_Guild_BuildingLevel = 138; // 周期内学社建筑等级达到para1级
+	QCT_Guild_BossLevel = 139; // 周期内学社妖兽通关para1级难度
+	QCT_Guild_QuestFinishCount = 140; // 周期内学社委托任务共完成para1个
+	QCT_Guild_GuardFriendness = 141; // 周期内任意镇守历史友好度达到para1万
+	QCT_Guild_GuardJoinCount = 142; // 周期内学社参与镇守之争para1次(每日一次)
+	QCT_Guild_MemberGiftCount = 143; // 周期内学社成员之间赠送礼物para1次
+	QCT_Guild_GuardOccupyCount = 144; // 周期内学社入住任意镇守para1位
+	QCT_Guild_WorshipCount = 145; // 周期内学社膜拜总次数达到para1次
+	QCT_Guild_AllGuardFriendness = 146; // 镇守历史友好度达到para1万
+	QCT_Guild_GuardFriendnessCount = 147; // 周期内para2个镇守历史友好度达到para1万
+	QCT_FightingNumIncrement = 148; // 战力涨幅
+	QCT_MingGeScoreIncrement = 149; // 命格涨幅
+	QCT_KaiTianPaiScoreIncrement = 150; // 御魔涨幅
+	QCT_FightShanhai_ShangGuLevel = 151; // 通关上古遗迹para1关
+	QCT_FightShanhai_LieZhuanLevel = 152; // 通关心魔para1关
+	QCT_FightShanhai_MeiLiInc = 153; // 魅力涨幅榜
+	QCT_FightShanhai_DrawCardCountInc = 154; // 补天涨幅榜
+
+	QCT_WorldMatchCount = 160; // 世界匹配的para1次数
+	QCT_WorldMatchSeasonScore = 161; // 世界匹配的para1积分
+	QCT_WorldMatchWinCount = 162;//世界匹配胜利para1次
+	QCT_AssistWinTime = 163;//协助副本通关para1次
+	QCT_AssistHelpTime = 164;//协助他人通关协助副本para1次
+	QCT_MingGeDrawTime = 165;//命格活动抽para1次卡
+	QCT_YMPDrawTime = 166;//御魔牌活动抽取para1次
+	QCT_FXEquipRefineTime = 167;//装备精炼para1次
+	QCT_FXEquipRefineLevel = 168;//装备精炼至para1级
+	QCT_Guild_TargetGuardCount = 169; // 选择目标镇守数量para1个
+}
+
+//任务领取类型
+enum QuestDetailType{
+	QuestDetailType_None = 0;
+	QDT_Achievement = 1;
+	QDT_DailyQuest = 2;
+	QDT_NormalQuest = 3;
+	QDT_GuildDailyQuest = 4;
+	QDT_SanXiaoAchievement = 5;
+	QDT_GuildBossDailyQuest = 6;
+	QDT_SanXiaoStatisticsQuest = 7;
+	QDT_StarAwakenQuest = 8;
+	QDT_HeroQuest = 9;
+	QDT_GuildDevelopQuest = 10;
+	QDT_PeriodActDaily = 11;
+	QDT_PeriodActAchievement = 12;
+	QDT_SevenDayRankQuest = 13;
+	QDT_WorldMatchDailyQuest = 14;
+	QDT_WeekQuest = 15;//周常
+}
+
+//活跃值系统类型
+enum ActiveNumType{
+	ActiveNumType_None = 0;
+	ANT_DailyQuest = 1;
+}
+
+//公会状态
+enum GuildState {
+	GuildState_None = 0;
+	GuildState_Normal = 1; // 正常
+	GuildState_Disbanding = 2; // 解散中
+	GuildState_Disband = 3; // 已解散
+	GuildState_Remove = 4; // 删除
+}
+
+//排行榜类型
+enum RankType{
+	RankType_None = 0;
+	RankType_Guild = 1; // 公会
+	RankType_PlayerTotalFighting = 2; // 玩家总战力排行 (上阵战力)
+	RankType_PlayerHandbook = 3; // 图鉴等级
+	RankType_PlayerLevel = 4; // 玩家等级排行
+	RankType_Trial = 5; // 无尽试炼
+
+	RankType_ClimbTower = 7;//爬塔排行
+    RankType_Arena = 8;//竞技场排行
+	RankType_Main = 9;//主线
+	RankType_GuildBoss = 10;//公会BOSS
+	RankType_Ring_QL = 11;//
+	RankType_Ring_XW = 12;//
+	RankType_Ring_BH = 13;//
+	RankType_Ring_ZQ = 14;//
+	RankType_XinMo = 15;//心魔
+	RankType_XinMoHard = 16;//心魔困难
+	RankType_GuardBossSanXiaoAttack = 17;//学社镇守Boss 攻击方 三消排行
+	RankType_GuardBossSanXiaoDefense = 18;//学社镇守Boss 防守方 三消排行
+	RankType_GuardBossDamageAttack = 19;//学社镇守Boss 攻击方伤害排行
+	RankType_GuardBossDamageDefense = 20;//学社镇守Boss 防守方伤害排行
+	RankType_XinMoVeryHard = 21;//心魔地狱
+	RankType_ShangGu = 22;//上古遗迹
+	RankType_SevenDay_PlayerLevel= 23;//决战七日玩家等级排行 包含机器人
+	RankType_SevenDay_PlayerFight= 24;//决战七日玩家战力排行 包含机器人
+	RankType_SevenDay_PlayerAwaken= 25;//决战七日玩家觉醒排行 包含机器人
+
+
+	
+	RankType_RobotPlayerTotalFighting = 50; // 机器人玩家总战力排行 (上阵战力)
+	RankType_Recommend_PlayerLevel = 51; // 玩家推荐等级排行
+	RankType_WorldMatchBattle = 52; // 跨服匹配站排行
+	RankType_Recommend_WorldMatchBattle = 53; // 跨服推荐匹配排行
+	RankType_AreaMatchBattle = 54; // 本服服匹配站排行
+
+	RankType_SevenDay_GuardBoss = 61;//决战山海 - 公会镇守友好度
+	RankType_SevenDay_ShangGu_LevelID = 62;//决战山海 - 福地关卡榜
+	RankType_SevenDay_XinMo_LevelID = 63;//决战山海 - 心魔关卡榜
+	RankType_SevenDay_FightingNum = 64;//决战山海 - 战力涨幅榜
+	RankType_SevenDay_MingGeScore = 65;//决战山海 - 命格涨幅榜
+	RankType_SevenDay_KaiTianPaiScore = 66;//决战山海 - 御魔涨幅榜		
+
+	RankType_HaoQi = 67;//豪气值榜单
+	RankType_MeiLi = 68;//魅力值榜单
+	
+	RankType_SevenDay_MeiLiScore = 69;//决战山海 - 魅力值涨幅榜		
+	RankType_SevenDay_DrawCardCount = 70;//决战山海 - 补天涨幅榜		
+
+}
+
+//商品限购类型
+enum BuyLimitType
+{ 
+	BuyLimitType_None = 0;
+	BuyLimitType_Day = 1;//每日限购
+	BuyLimitType_Week = 2;//每周限购
+	BuyLimitType_Month = 3;//每月限购
+	BuyLimitType_Forever = 4;//永久限购
+}
+
+//对应SystemOpen 配置表的ID
+enum SystemOpenType
+{
+	SOT_None = 0;
+	SOT_TASK= 1;
+	SOT_EMAIL = 2;
+	SOT_ACTIVITY = 3;
+	SOT_RANK = 4;
+	SOT_FRIEND = 5;
+	SOT_SIGINN = 6;
+	SOT_PVP_ARENA = 7;
+	SOT_TOWER = 8;
+	SOT_LIEZHUAN = 9;
+	SOT_PVE = 10;
+	SOT_HERO = 11;
+	SOT_CHOUKA = 12;
+	SOT_HANDBOOK = 13;
+	SOT_BAG = 14;
+	SOT_SHOP = 15;
+	SOT_HERO_STAR = 16;
+	SOT_HERO_GODWEAPON = 17;
+	SOT_HERO_SHIZHUANG = 18;
+	SOT_HERO_ZHUANNJI = 19;
+	SOT_HERO_JIBAN = 20;
+	SOT_FAXIANG_MAIN = 21;
+	SOT_FAXIANG_EQUIP = 22;
+	SOT_FAXIANG_GEM = 23;
+	SOT_FAXIANG_YINJI = 24;
+	SOT_KAITIANPAI = 25;
+	SOT_RANKLEVEL = 33;
+	SOT_RANKARENA = 34;
+	SOT_RANKMAIN  = 35;
+
+	SOT_RANKCLIMBTOWER = 37;
+	SOT_RANKTOPFOUR = 38;
+	SOT_EXPEDITION = 41; //远游
+	SOT_RING = 42; //洪荒论道 擂台
+	SOT_SEVENSIGNIN = 72;//7日签到
+	SOT_HERO_POTENTIAL=73;//幻灵潜能
+	SOT_GUARD_BOSS=79;//镇守之争
+	SOT_PVPType_SANXIAO = 80;//寰天星盘
+	SOT_Seven_Task = 85;//七日活动
+	SOT_Fourteen_Task = 86;//14日活动
+	SOT_Match_Action = 115;//匹配赛 万法存真
+}
+
+//擂台类型
+enum RingType
+{
+	RingType_None = 0;
+	RingType_QingLong = 1;//青龙 空桑战区
+	RingType_XuanWu = 2;//玄武 黄泉战区
+	RingType_BaiHu = 3;//白虎 青丘战区
+	RingType_ZhuQue = 4;//朱雀 大漠战区
+}
+
+//家园建筑类型
+enum HomeBuildingType{
+	HomeBuildingType_None = 0;
+	HomeBuildingType_Inn = 1; // 客栈
+	HomeBuildingType_Restaurant = 2; // 餐馆
+	HomeBuildingType_Stage = 3; // 戏台
+}
+
+enum HomeHeroState {
+	HomeHeroState_None = 0;
+	HomeHeroState_Normal = 1; // 正常
+	HomeHeroState_Scene = 2; // 在场景中
+	HomeHeroState_Busy = 3; // 繁忙
+	HomeHeroState_Farm = 4; // 种田
+	HomeHeroState_Recover = 5; // 恢复疲劳值
+}
+
+enum HomePartyType
+{
+	HomePartType_None = 0;
+	HomePartyType_Normal = 1; // 普通家宴
+	HomePartyType_Celebration = 2; // 庆功宴
+}
+
+enum HomePartyPlayerType
+{
+	HomePartyPlayerType_None = 0;
+	HomePartyPlayerType_Master = 1; // 主人
+	HomePartyPlayerType_MainGuest = 2; //主宾客
+	HomePartyPlayerType_Guest = 3; //宾客
+	HomePartyActionType_Visitor = 4;  //游客
+}
+
+enum HomePartyActionType
+{
+	HomePartyActionType_None = 0;
+	HomePartyActionType_Idle = 1; //待机 原地
+	HomePartyActionType_Walk = 2; //走路
+	HomePartyActionType_Run = 3;  //奔跑
+	HomePartyActionType_Eat = 4; //吃东西
+	HomePartyActionType_Dance = 5; // 跳舞
+}
+
+enum HomePartyState {
+	HomePartyState_None = 0;
+	HomePartyState_Subscribe = 1; // 预约
+	HomePartyState_Open = 2; // 开启
+	HomePartyState_Finished = 3; // 结束
+	HomePartyState_Expired = 4; // 过期
+}
+
+enum HomePartyGameType {
+	HomePartyGameType_None = 0;
+	HomePartyGameType_Normal = 1; // 准备阶段
+	HomePartyGameType_EatDish = 2; // 吃菜
+	HomePartyGameType_GuessNumber = 3; // 猜数字
+	HomePartyGameType_MakeWine = 4; // 酿酒
+	HomePartyGameType_Robber = 5; // 强盗
+	HomePartyGameType_GameFinish = 10; // 游戏结束
+	HomePartyGameType_Award = 11; // 奖励结算
+	HomePartyGameType_PartyFinish = 12; // 宴会关闭
+}
+
+// 猜数字游戏状态
+enum HomePartyGameGuessNumberState {
+	HomePartyGameGuessNumberState_None = 0;
+	HomePartyGameGuessNumberState_Prepare = 1;
+	HomePartyGameGuessNumberState_Doing = 2;
+	HomePartyGameGuessNumberState_AnswerFinish = 3;
+	HomePartyGameGuessNumberState_Finish = 4;
+}
+
+//聊天频道类型
+enum ChannelType
+{
+	ChannelType_None 	= 0;
+	ChannelType_World 	= 1;//世界频道
+	ChannelType_NearBy = 2;//附近频道
+	ChannelType_Union	= 3;//工会频道
+	ChannelType_Team	= 4;//队伍频道
+	ChannelType_Sys		= 5;//系统频道
+	ChannelType_BOSS	= 6;//世界BOSS频道
+	ChannelType_Friend	= 7;//好友信息
+	ChannelType_HomeParty= 8;//家宴
+	ChannelType_Notice = 9;//公告
+}
+//聊天消息类型
+enum ChatType
+{
+	ChatType_None 	= 0;
+	ChatType_Player = 1; //玩家消息
+	ChatType_Sys 	= 2; //系统消息
+	ChatType_Notice = 3; //公告
+	ChatType_Show   = 4; //展示
+	ChatType_Assist = 5; //协助组队
+	ChatType_Friend = 6; //好友信息
+}
+
+//宝箱开启的类型
+enum BoxOpenType
+{
+	BOT_None = 0;
+	BOT_ALL = 1;//获得所有
+	BOT_RAND_ONE = 2;//随机选一个
+	BOT_PICK_ONE	= 3;//自己选择其中一个
+	BOT_GROUP_RANOM_ONE	= 4;//特殊宝箱 需要在组的规则下 随机一个
+}
+
+//家园任务标签
+enum HomeQuestLable
+{
+	HQL_None = 0;
+	
+}
+
+//家园奇遇节点类型
+enum HomeAdventureType
+{
+	HAT_None = 0;
+	HAT_Dialog = 1; // 对话
+	HAT_Battle = 2; // 战斗
+}
+
+
+//代消状态
+enum DaiXiaoState
+{
+	DXState_None = 0;
+	DXState_Help = 1;
+	DXState_Success = 2;
+	
+}
+
+// 无尽试炼
+enum TrialState {
+	TrialState_None = 0;
+	TrialState_Normal = 1; // 正常
+	TrialState_BattleInit = 2; // 试炼战斗初始
+	TrialState_Battle = 3; // 试炼战斗中
+	TrialState_Win = 4; // 胜利
+	TrialState_Fail = 5; // 失败
+}
+
+// 远游
+enum ExpeditionState {
+	ExpeditionState_None = 0;
+	ExpeditionState_Normal = 1; // 正常
+	ExpeditionState_BattleInit = 2; // 战斗初始
+	ExpeditionState_Battle = 3; // 战斗中
+	ExpeditionState_Win = 4; // 胜利
+	ExpeditionState_Fail = 5; // 失败
+}
+
+//阵营
+enum GroupType
+{
+	GroupType_None = 0;
+	GroupType_Wei = 1;//魏
+	GroupType_Shu = 2;//蜀
+	GroupType_Wu = 3;//魔
+	GroupType_Qun = 4;//吴
+	GroupType_Limit = 5; // 群
+}
+
+// 公会建筑类型
+enum GuildBuildingType{
+	GuildBuildingType_None = 0;
+	GuildBuildingType_HALL = 1; // 大殿
+	GuildBuildingType_SHOP = 2; // 商店
+	GuildBuildingType_LORD = 3; // 领主
+	GuildBuildingType_QUEST = 4; // 任务
+	GuildBuildingType_BOSS = 5; // BOSS
+	GuildBuildingType_SKILL = 6; // 技能
+	GuildBuildingType_WORSHIP = 7; // 膜拜
+	GuildBuildingType_ACTIVITY = 8; // 活动
+}
+
+//公会拍卖状态
+enum GuildAuctionState
+{
+	GuildAuctionState_None = 0;
+	GuildAuctionState_Normal = 1;
+	GuildAuctionState_Doing = 2;
+	GuildAuctionState_Finished = 3;
+}
+
+enum GuildAuctionItemState
+{
+	GuildAuctionItemState_None = 0;
+	GuildAuctionItemState_Normal = 1;
+	GuildAuctionItemState_Finished = 2;
+}
+
+// 拍卖出价类型
+enum AuctionBidType
+{
+	BidType_None = 0; // 流拍
+	BidType_Fixed = 1; // 一口价
+	BidType_Auction = 2; // 竞拍
+}
+
+// 拍卖品来源类型
+enum AuctionFromType
+{
+	AuctionFromType_None = 0; 
+	AuctionFromType_GuildBoss = 1; // 公会妖兽BOSS
+	AuctionFromType_GuildGuard = 2; // 公会镇守
+}
+
+//协助副本开启状态
+enum AssistMapState
+{
+	AssistMapState_None= 0;
+	AssistMapState_Open =1;
+	AssistMapState_Close =2;
+}
+
+// 阵营
+enum FactionType
+{
+	FactionType_None = 0;
+	FactionType_Good = 1; // 正义
+	FactionType_Evil = 2; // 邪恶
+	FactionType_Max = 3; // 
+}
+
+// 公会权限
+enum GuildAuthorityType
+{
+	AuthorityNone = 0;
+	AuthorityModifyNotice = 1;
+	AuthorityApplyCheck = 2;
+	AuthorityBroadcastMail = 3;
+	AuthorityBuildingUp = 4;
+	AuthorityPublishQuest = 5;
+	AuthorityRecruit = 6;
+	AuthorityInviteGuard=7;
+	AuthorityRemoveGuard=8;
+	AuthorityTmptGuard=9;
+	AuthoritySetTargetGuard=10;
+	Authoritydispel=11;
+	Authorityplan=12;
+	AuthorityInvestigate=13;
+	AuthorityKickMember = 14;
+	AuthorityRelieve = 15;
+}
+
+//活动类型
+enum ActivityType
+{
+  ActivityType_None =0;
+  ActivityType_Daily  =1; //每日活动
+  ActivityType_GuardBoss=2;//领主BOSS
+  ActivityType_AssistLevel=3;//协助副本
+  ActivityType_Ring = 4;//擂台
+  ActivityType_Physical = 5;//每日体力补给
+}
+
+//活动状态
+enum ActivityState
+{
+  ActivityState_None =0;
+  ActivityState_Init = 1; //活动初始化
+  ActivityState_WaitReady = 2; //活动开启 战前准备中
+  ActivityState_CountDown = 3; //活动开启 战斗倒计时
+  ActivityState_Start = 4; //正式开启 战斗中
+  ActivityState_Close = 5;
+  ActivityState_Settlement = 6;//活动结算
+  ActivityState_Invalid = 7;//活动彻底结束
+}
+
+//抗灭
+enum KangMieType
+{
+  KangMieType_None =0;
+  KangMieType_Ke = 1; //抗灭 克
+  KangMieType_Yu = 2; //抗灭 御
+}
+
+enum RedPointType
+{
+	RedPointType_None = 0;
+	RedPointType_Store = 1;
+}
+//学社镇守交互类型
+enum GuardEventType
+{
+	GuardEventType_None =0;
+	GuardEventType_Offer =1; //供奉
+	GuardEventType_Tempt =2; //诱惑
+	GuardEventType_Invite =3; //邀请
+	GuardEventType_Remove =4; //解除
+}
+
+//学社镇守交互类型
+enum PaoMaDengType
+{
+	PaoMaDengType_None =0;
+	PaoMaDengType_Cfg =1; //读配置
+	PaoMaDengType_Sys =2; //后台发送
+}
+
+// 支付状态
+enum RechargeState
+{
+	RechargeState_None = 0;
+	RechargeState_Doing = 1; // 支付中
+	RechargeState_Ok = 2; // 支付成功
+	RechargeState_ItemGet = 3; // 道具领取
+	RechargeState_Cancel = 4; // 订单取消
+	RechargeState_Timeout = 5; // 订单超时
+}
+
+//战令奖励类型
+enum ZhanLingPayType
+{
+	ZhanLingPayType_None =0;
+	ZhanLingPayType_Normal =1; //普通战令
+	ZhanLingPayType_Pay =2; //豪华战令 付费的
+}
+
+enum ZhanLingType
+{
+	ZhanLingType_None =0;
+	ZhanLingType_PVE =1; //普通战令
+	ZhanLingType_Tower =2; //爬塔战令
+	ZhanLingType_Relics=3; //遗迹战令
+	ZhanLingType_Level=4; //等级战令
+	ZhanLingType_LieZhuan=5; //列传战令
+}
+
+enum RechargeStoreType
+{
+	RechargeStoreType_Diamonds =0;
+	RechargeStoreType_ =1; //钻石
+	RechargeStoreType_ZhanLingPVE=2;//主线战令
+	RechargeStoreType_ZhanLingTower=3;//主线战令
+	RechargeStoreType_ZhanLingRelics=4;//遗迹战令
+	RechargeStoreType_Level=5;//等级战令
+	RechargeStoreType_LieZhuan=6;//心魔列传战令
+	RechargeStoreType_YueKaCheap=7;//普通月卡
+	RechargeStoreType_YueKaExpensive=8;//豪华月卡
+	RechargeStoreType_DailyDeal=9;//每日特惠礼包
+	RechargeStoreType_DayGiftPackage=11;//全服每日礼包
+	RechargeStoreType_WeekGiftPackage=12;//全服每周礼包
+	RechargeStoreType_PickGiftPackage_Link = 13;//进度礼包-上古遗迹 Pick_GiftPackage_Link 线性礼包
+	RechargeStoreType_PickGiftPackage_Vip = 14;//进度礼包-心魔 Pick_GiftPackage_Viptype vip礼包
+	RechargeStoreType_PickGiftPackage_HeroRand = 15;//进度礼包-主线 Pick_GiftPackage_Herotype_Rand 英雄随机礼包
+	RechargeStoreType_PickGiftPackage_HeroOrder = 16;//进度礼包-支线  Pick_GiftPackage_Herotype_Order 英雄顺序礼包
+	RechargeStoreType_PoBing = 17;//破冰礼包
+	RechargeStoreType_GodWeaponGiftPackage = 18; //每日命格礼包
+	RechargeStoreType_YuMoPaiGiftPackage = 19; //每日御魔牌礼包
+}
+
+//月卡奖励类型
+enum YueKaType
+{
+	YueKaType_None =0;
+	YueKaType_Cheap =1; //普通月卡
+	YueKaType_Expensive =2; //豪华月卡
+}
+//决战七日奖励状态
+enum SevenDayRewardType
+{
+	SevenDayRewardType_None =0;
+	SevenDayRewardType_Reached =1; //已经达成
+	SevenDayRewardType_GetItem =2; //已领取
+}
+enum SevenDayRankType
+{
+	SevenDayRankType_None =0;
+	SevenDayRankType_Fight =1; //战力
+	SevenDayRankType_Awaken =2; //觉醒
+	SevenDayRankType_Level =3; //等级
+}
+
+//礼包类型
+enum GiftPackageType
+{
+	GPT_None = 0;
+	GPT_PickVipType = 1;//推送礼包 Pick_GiftPackage_Viptype
+	GPT_HeroTypeRand = 2;//推送礼包 Pick_GiftPackage_Herotype_Rand
+	GPT_HeroTypeOrder = 3;//推送礼包 Pick_GiftPackage_Herotype_Order
+	GPT_PickLink = 4;//推送礼包 Pick_GiftPackage_link
+}
+
+//推送礼包触发方式
+enum GiftPackageFunctionType
+{
+	GPFT_None = 0;
+	GPFT_PVELevelID = 1;//推送礼包 主线关卡
+	GPFT_ZhongZuLevelID = 2;//推送礼包 种族关卡
+	GPFT_ShangGuLevelID = 3;//推送礼包 上古遗迹关卡
+	GPFT_LieZhuanLevelID = 4;//推送礼包 列传关卡
+	GPFT_KTShopRefresh = 5;//推送礼包 开天牌商店刷新次数
+	GPFT_KTShopPrice = 6;//推送礼包 开天牌商店价格
+}
+//玩家称号状态
+enum TitleActiveState
+{
+	TitleActiveState_None=0;
+	TitleActiveState_Get=1;//获得未激活
+	TitleActiveState_Active=2;//已经激活
+}
+//玩家代销记录类型
+enum DaiXiaoHistoryType
+{
+	DaiXiaoHistoryType_None=0;
+	DaiXiaoHistoryType_Req=1;//回执记录
+	DaiXiaoHistoryType_Rec=2;//协助记录
+}
+
+// 活动状态
+enum BusinessActivityState
+{
+	BusinessActivityState_None = 0;
+	BusinessActivityState_Prepare = 1;//准备中
+	BusinessActivityState_Open = 2;//开启
+	BusinessActivityState_Finished = 3;//结束
+	BusinessActivityState_Close = 4;//关闭
+}
+
+// 活动类型ID
+enum BusinessActivityType
+{
+	BusinessActivityType_None = 0;
+	BusinessActivityType_QIFU = 5;//充值祈福
+	BusinessActivityType_TianXiaJueLing = 11;//天下觉灵
+	BusinessActivityType_PoBing = 14;//天下觉灵
+	BusinessActivityType_SevenDayRank = 16;//决战七日
+	BusinessActivityType_RechargeTotal = 101; // 累计充值
+	BusinessActivityType_MingGe = 102; // 显圣附魔
+	BusinessActivityType_YuMoPai = 103; // 占天知命
+}
+
+// 活动开启类型
+enum BusinessActivityOpenType
+{
+	BusinessActivityOpenType_None = 0;
+	BusinessActivityOpenType_System = 1; // 系统自动开启
+	BusinessActivityOpenType_GM = 2; // 游戏管理人员开启
+}
+
+// 决战七日活动状态
+enum SevenDayActivityState
+{
+	SevenDayActivityState_None = 0;
+	SevenDayActivityState_Prepare = 1;//准备中
+	SevenDayActivityState_Open = 2;//开启
+	SevenDayActivityState_Finished = 3;//结束
+	SevenDayActivityState_Close = 4;//关闭
+}
+
+//装备精炼类型
+enum FXEquipRefineType
+{
+	FXEquipRefineType_None = 0;
+	FXEquipRefineType_Exp  = 1; //普通精炼
+	FXEquipRefineType_Level = 2; // 精炼一级
+}
+
+// 学社发展任务章节状态
+enum GuildDevelopChapterState
+{
+	GuildDevelopChapterState_None = 0;
+	GuildDevelopChapterState_Open = 1;//开启
+	GuildDevelopChapterState_Finished = 2;//结束
+}
+
+// 个人空间访问行为类型
+enum PlayerSpaceVisitActionType
+{
+	PlayerSpaceVisitActionType_None = 0;
+	PlayerSpaceVisitActionType_HomePage = 1; // 主页
+	PlayerSpaceVisitActionType_Embattle = 2; // 阵容
+	PlayerSpaceVisitActionType_Photo = 3; // 相册
+}
+
+// VIP属性加成
+enum VipAttrType
+{
+	VipAttrType_None = 0;
+	VipAttrType_PhotoNum = 1; // 相册扩容数量
+	VipAttrType_SetCustomHeadIcon = 2; // 自定义头像
+
+}
+enum HeroStrategyType
+{
+	HeroStrategyType_None=0;
+	HeroStrategyType_Skill=1;
+	HeroStrategyType_Emabttle=2;
+	HeroStrategyType_KTPSkill=3;
+	HeroStrategyType_Play=4;
+}
+
+// 充值类型
+enum RechargeType
+{
+	RechargeType_None = 0;
+	RechargeType_Money = 1; // 金钱
+	RechargeType_Voucher = 2; // 代金券
+}

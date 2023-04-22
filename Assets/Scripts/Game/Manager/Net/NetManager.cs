@@ -2,6 +2,7 @@
 using GreyFramework;
 using System;
 using System.Collections;
+using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -55,7 +56,7 @@ namespace ErisGame
             else if ((webSocket.State == WebSocketState.Open))
             {
                 Debug.LogError("发送消息"+ msg);
-                await webSocket.SendAsync(new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes(msg)), WebSocketMessageType.Binary, true, CancellationToken.None);
+                await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(msg)), WebSocketMessageType.Binary, true, CancellationToken.None);
             }
 
         }
