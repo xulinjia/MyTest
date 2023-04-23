@@ -8,9 +8,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ErisGame
 {
+    public class MessageData
+    {
+        public short packetId;//消息头部ID
+        public int msgNum_server;//标识消息序列号(服务器)
+        public int msgNum_client;//标识消息序列号(客户端)
+        public byte[] data;//解析数据
+    }
+
+
     public class NetManager : Manager
     {
         public override eManager Type => eManager.Net;
@@ -23,7 +33,19 @@ namespace ErisGame
         }
         protected override void OnUpdate()
         {
-        
+            lock (reciveMsgs)
+            {
+                int count = reciveMsgs.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    MessageData message = reciveMsgs.Dequeue();//队列第一个添加的数据
+                                                               //处理消息分发
+                    if (reciveMsgCallback != null)
+                    {
+                        reciveMsgCallback((short)message.packetId, (uint)message.msgNum_server, (uint)message.msgNum_client, message.data);
+                    }
+                }
+            }
         }
         public async void TryConnect(string ip,int post) 
         {
@@ -82,6 +104,9 @@ namespace ErisGame
         private Uri serverUri;
         private static ClientWebSocket webSocket;
         private object lockReconnect = new object();
-        private Coroutine _pingCor, _clientPing, _serverPing;
+        private Action<short, uint, uint, byte[]> reciveMsgCallback;//接收消息的回调 一般lua的json方式使用
+        private Queue<MessageData> reciveMsgs = new Queue<MessageData>();
+   
+    
     }
 }
