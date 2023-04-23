@@ -519,7 +519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5207\u6362\u573A\u666F"
+  m_text: "\u5C1D\u8BD5\u53D1\u9001"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f816d57cb6031ed468cd16cae6a17919, type: 2}
   m_sharedMaterial: {fileID: 9115348843149108757, guid: f816d57cb6031ed468cd16cae6a17919, type: 2}
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3747fc779b2ca074f9bf4e2b0721cff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cube_Test: {fileID: 1040385248}
+  Cube_Test: {fileID: 0}
 --- !u!1 &1040385248
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 1407495693}
   - component: {fileID: 1407495692}
   m_Layer: 5
-  m_Name: btn_switchScene
+  m_Name: btn_testSend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

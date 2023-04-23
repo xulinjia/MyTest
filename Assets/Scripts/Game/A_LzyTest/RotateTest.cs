@@ -12,21 +12,20 @@ public class RotateTest : MonoBehaviour
         sengText = transform.Find("sengText").GetComponent<TMP_Text>();
         btn_test = transform.Find("btn_test").GetComponent<Button>();
         btn_test.onClick.AddListener(OnTestBtn);
-        btn_switchScene = transform.Find("btn_switchScene").GetComponent<Button>();
-        btn_switchScene.onClick.AddListener(onSwitchSceneBtn);
+        btn_switchScene = transform.Find("btn_testSend").GetComponent<Button>();
+        btn_switchScene.onClick.AddListener(onTestSendBtn);
         btn_testLogin = transform.Find("btn_testLogin").GetComponent<Button>();
         btn_testLogin.onClick.AddListener(onTestLoginBtn);
     }
 
-    private async void OnTestBtn()
+    private void OnTestBtn()
     {
-        //rotateFlag = !rotateFlag;
+        rotateFlag = !rotateFlag;
+    }
+    private async void onTestSendBtn()
+    {
         string sendMsg = sengText.text;
         await Managers.GetNetManager().SendMessage(sendMsg);
-    }
-    private void onSwitchSceneBtn()
-    {
-        SceneManager.LoadScene("SceneTest");
     }
     private void onTestLoginBtn()
     {
