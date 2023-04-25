@@ -1,4 +1,9 @@
+using CenterMsg;
 using ErisGame;
+using Google.Protobuf;
+using System;
+using System.IO;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,8 +21,20 @@ public class RotateTest : MonoBehaviour
         btn_switchScene.onClick.AddListener(onTestSendBtn);
         btn_testLogin = transform.Find("btn_testLogin").GetComponent<Button>();
         btn_testLogin.onClick.AddListener(onTestLoginBtn);
-    }
 
+        btn_A = transform.Find("btn_A").GetComponent<Button>();
+        btn_A.onClick.AddListener(OnABtn);
+        btn_B = transform.Find("btn_A").GetComponent<Button>();
+        btn_B.onClick.AddListener(OnBBtn);
+    }
+    private void OnABtn()
+    {
+
+    }
+    private void OnBBtn()
+    {
+
+    }
     private void OnTestBtn()
     {
         rotateFlag = !rotateFlag;
@@ -25,11 +42,11 @@ public class RotateTest : MonoBehaviour
     private async void onTestSendBtn()
     {
         string sendMsg = sengText.text;
-        await Managers.GetNetManager().SendMessage(sendMsg);
+        await Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_Login, new C2G_Login() {AccountId = "ÓÃ»§ID",PassWd = "password"});
     }
     private void onTestLoginBtn()
     {
-        Managers.GetNetManager().TryConnect("",0);
+        var res = Managers.GetNetManager().TryConnectAsync("",0);
     }
     private void Update()
     {
@@ -39,6 +56,8 @@ public class RotateTest : MonoBehaviour
         }
     }
 
+    private Button btn_A;
+    private Button btn_B;
     private Button btn_test;
     private Button btn_switchScene;
     private Button btn_testLogin;
