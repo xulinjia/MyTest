@@ -2,16 +2,13 @@
 using GreyFramework;
 using System;
 using System.Collections;
-using System.IO;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
-using CenterMsg;
 using Google.Protobuf;
-using System.Reflection;
+using CenterMsg;
 
 namespace ErisGame
 {
@@ -77,8 +74,7 @@ namespace ErisGame
             //Debug.LogFormat("接收一个消息包完成:{0}", headId);
             lock (Managers.GetNetManager().reciveMsgs)
             {
-                //Managers.GetNetManager().reciveMsgs.Enqueue(message);
-                Managers.GetNetManager().MessageDispatch(messageData.packetId, (uint)messageData.msgNum_server, (uint)messageData.msgNum_client, messageData.data);
+                Managers.GetNetManager().reciveMsgs.Enqueue(messageData);
             }
         }
         public void PaseMsgHeadId(byte[] bytes)
@@ -131,7 +127,6 @@ namespace ErisGame
             bodyLength = 0;
             dataBuffer_head.Clear();
             dataBuffer_data.Clear();
-            messageData.Reset();
         }
     }
     #endregion 辅助类
@@ -154,22 +149,19 @@ namespace ErisGame
         public void Dispose()
         {
             reciveMsgs.Clear();
-
-
-
         }
 
         protected override void OnUpdate()
         {
-            //lock (reciveMsgs)
-            //{
-            //    int count = reciveMsgs.Count;
-            //    for (int i = 0; i < count; i++)
-            //    {
-            //        MessageData message = reciveMsgs.Dequeue();//队列第一个添加的数据
-            //        messageDispatch(message.packetId, (uint)message.msgNum_server, (uint)message.msgNum_client, message.data);
-            //    }
-            //}
+            lock (reciveMsgs)
+            {
+                int count = reciveMsgs.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    MessageData message = reciveMsgs.Dequeue();//队列第一个添加的数据
+                    MessageDispatch(message.packetId, message.data);
+                }
+            }
         }
         public async Task TryConnectAsync(string ip, int post)
         {
@@ -181,8 +173,8 @@ namespace ErisGame
                 if (webSocket.State == WebSocketState.Open)
                 {
                     Debug.LogError("连接成功！");
-                    await ReceiveMessage();
                     startHeartBeat();
+                    await ReceiveMessage();
                 }
             }
             catch (Exception ex)
@@ -191,25 +183,77 @@ namespace ErisGame
             }
         }
 
-
         //注册消息
-        public void RegCallbackFunc(int msgId, object obj, Action<short, uint, uint, byte[]> action)
-        {
+        //public void RegCallbackFuncT<T>(NetMsgID msgId, object obj, NetMsgCallbackFuncT<T> msgCallback) where T : IMessage, new()
+        //{
+        //    Dictionary<object, ArrayList> callbackDic;
+        //    ArrayList arrayList;
+        //    if (recCallBacks.TryGetValue(msgId, out callbackDic))
+        //    {
+        //        if (callbackDic.TryGetValue(obj,out arrayList))
+        //        {
+        //            if (!arrayList.Contains(msgCallback))
+        //            {
+        //                //已经存在相同回调，直接返回
+        //                return;
+        //            }
+        //            arrayList.Add(msgCallback);
+        //        }
+        //        else
+        //        {
+        //            arrayList = new ArrayList();
+        //            arrayList.Add(msgCallback);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        callbackDic = new Dictionary<object, ArrayList>();
+        //        arrayList = new ArrayList();
+        //        arrayList.Add(msgCallback);
+        //        callbackDic.Add(obj, arrayList);
+        //        recCallBacks.Add(msgId, callbackDic);
+        //    }
+        //}
+        ////public void RegCallbackFunc(NetMsgID msgId, object obj, NetMsgCallbackFunc msgCallback)
+        ////注销消息
+        //public void UnRegCallbackFuncT<T>(NetMsgID msgId, object obj, NetMsgCallbackFuncT<T> msgCallback) where T : IMessage, new()
+        //{
+        //    Dictionary<object, ArrayList> callbackDic;
+        //    ArrayList arrayList;
+        //    if (recCallBacks.TryGetValue(msgId, out callbackDic))
+        //    {
+        //        if (callbackDic.TryGetValue(obj,out arrayList))
+        //        {
+        //            if (arrayList.Contains(msgCallback))
+        //            {
+        //                arrayList.Remove(msgCallback);
+        //            }
+        //        }
+        //    }
 
-
-        }
-
-        //注销消息
-        public void UnRegAllCallbackFunc(object obj)
-        {
-
-        }
+        //}
+        ////注销对象所有消息
+        //public void UnRegAllCallbackFunc(object obj)
+        //{
+        //    ArrayList arrayList;
+        //    foreach (var item in recCallBacks)
+        //    {
+        //        if (item.Value.TryGetValue(obj,out arrayList))
+        //        {
+        //            item.Value.Remove(obj);
+        //        }
+        //    }
+        //}
         //发送消息
+        public async Task SendMessageAsync(NetMsgID netMsgId)
+        {
+            await SendMessageAsync(netMsgId,null);
+        }
         public async Task SendMessageAsync(NetMsgID netMsgId, IMessage msgData)
         {
 
             short short_msgId = (short)netMsgId;
-            byte[] byte_msgData = Serialize(msgData);
+            byte[] byte_msgData = SerializaBuffer.Serialize(msgData);
             int dataLength = byte_msgData.Length;
             short dataLength_NO = System.Net.IPAddress.HostToNetworkOrder((short)byte_msgData.Length);
             if (dataLength > sendMaxByteCount)
@@ -255,8 +299,7 @@ namespace ErisGame
                 {
                     if (webSocket.State == WebSocketState.Open)
                     {
-                        //sendMessage();
-                        Debug.LogError("发送心跳包！");
+                        SendMessageAsync(heartMsgId);
                         Thread.Sleep(heartTime);
                     }
                     else
@@ -271,22 +314,10 @@ namespace ErisGame
                 }
             }
         }
-        public static byte[] Serialize<T>(T obj) where T : IMessage
-        {
-            return obj.ToByteArray();
-        }
-
-        public static T Deserialize<T>(byte[] data) where T : class, IMessage, new()
-        {
-            T obj = new T();
-            IMessage message = obj.Descriptor.Parser.ParseFrom(data);
-            return message as T;
-        }
 
         private async Task sendMessageAsync(byte[] message)
         {
 
-            Debug.LogError("尝试发送消息:" + Encoding.UTF8.GetString(message));
             if (webSocket.State != WebSocketState.Open)
             {
                 //await webSocket.ConnectAsync(serverUri, CancellationToken.None);
@@ -296,43 +327,43 @@ namespace ErisGame
                await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
             }
         }
-
         //消息处理
         //消息ID，服务器序列号，客户端序列号
-        public void MessageDispatch(NetMsgID msgId, uint serverId, uint clientId, byte[] msgData)
+        public void MessageDispatch(NetMsgID msgId, byte[] msgData)
         {
-            Debug.LogError(msgId);
-            Debug.LogError(Encoding.UTF8.GetString(msgData));
+
+            //string s = "CenterMsg.C2G_Login";
+            //Type t = System.Type.GetType(s,false,true);
+            //Debug.LogError(t.FullName);
+            //Debug.LogError(Deserialize<t>(msgData));
+            IMessage message;
+            if (msgId == NetMsgID.C2G_Login)
+            {
+                message = SerializaBuffer.Deserialize<C2G_Login>(msgData);
+                Debug.LogError(message);
+            }
+            
         }
-        //public async Task ReceiveMessage()
-        //{
-        //    while (webSocket.State == WebSocketState.Open)
-        //    {
-        //        byte[] buffer = new byte[1024];
-        //        WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-        //        if (result.MessageType == WebSocketMessageType.Close)
-        //        {
-        //            await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-        //        }
-        //        else
-        //        {
-        //            var str = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-        //            Debug.LogError(str);
-        //        }
-        //    }
-        //}
 
         private async Task ReceiveMessage()
         {
             while (true)
             {
-                Debug.LogError("ReceiveMessage");
+                //Debug.LogError("ReceiveMessage");
+                //网络断开时，跳出循环
                 if (webSocket.State != WebSocketState.Open)
                 {
+                    Debug.LogError("网络已断开");
                     return;
                 }
                 ArraySegment<byte> bytesReceived = new ArraySegment<byte>(new byte[1024]);
-                await webSocket.ReceiveAsync(bytesReceived, CancellationToken.None);
+                WebSocketReceiveResult result = await webSocket.ReceiveAsync(bytesReceived, CancellationToken.None);
+                //消息为结束消息是，断开网络并跳出循环
+                if (result.MessageType == WebSocketMessageType.Close)
+                {
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                    return;
+                }
                 StateObject state = new StateObject();
                 int numberOfBytesRead = bytesReceived.Count;
                 if (numberOfBytesRead > 0)
@@ -350,10 +381,6 @@ namespace ErisGame
                         state.DispatchMsg();
                         state.Clean();
                     }
-                }
-                else
-                {
-                    Debug.LogError("网络已断开");
                 }
             }
         }
@@ -375,6 +402,9 @@ namespace ErisGame
         private int sendMsgNum = 10000; //发送消息序列号
         private bool isStopReadBuffer = false;
 
+        //消息回调字典，按NetMsgID为索引，保存对应对象的回调列表
+        private Dictionary<NetMsgID,Dictionary<object, ArrayList>> recCallBacks = new Dictionary<NetMsgID,Dictionary<object, ArrayList>>();
+        
         //每次发送消息前都要保存下发的消息，用来处理断线重连或者发送超时后的补发情况
         //补发根据填充的数据顺序进行补发
         //private List<SendMsgCacheQueueData> logic_sendCache = new List<SendMsgCacheQueueData>();

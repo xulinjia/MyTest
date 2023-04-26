@@ -1,6 +1,9 @@
 ﻿
+
 namespace GreyFramework
 {
+    using Google.Protobuf;
+
     public delegate void CallBack();
     public delegate void CallBack<T>(T _call1);
     public delegate void CallBack<T, T1>(T _call1, T1 _call2);
@@ -22,4 +25,8 @@ namespace GreyFramework
 
     public delegate void OnAllocBuffer(out byte[] buffer, long len);
     public delegate void OnFreeBuffer(ref byte[] buffer);
+
+    //网络回调注册
+    public delegate void NetMsgCallbackFunc(IMessage message);
+    public delegate void NetMsgCallbackFuncT<T>(T message) where T : IMessage, new();
 }

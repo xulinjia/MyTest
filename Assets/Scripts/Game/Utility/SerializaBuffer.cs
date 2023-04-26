@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
 using System.Text;
 
 namespace ErisGame
@@ -126,6 +127,18 @@ namespace ErisGame
             value = BitConverter.ToInt32(bytes, 0);
             seek += sizeof(int);
             return value;
+        }
+
+        public static byte[] Serialize<T>(T obj) where T : IMessage
+        {
+            return obj.ToByteArray();
+        }
+
+        public static T Deserialize<T>(byte[] data) where T : class, IMessage, new()
+        {
+            T obj = new T();
+            IMessage message = obj.Descriptor.Parser.ParseFrom(data);
+            return message as T;
         }
 
     }

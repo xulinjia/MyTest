@@ -1,5 +1,7 @@
 
 
+using CenterMsg;
+using Google.Protobuf;
 using System.Collections.Generic;
 public enum NetMsgID {
     C2G_Login = 100 ,

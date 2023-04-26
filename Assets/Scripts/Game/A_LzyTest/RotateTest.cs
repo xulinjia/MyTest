@@ -1,12 +1,7 @@
 using CenterMsg;
 using ErisGame;
-using Google.Protobuf;
-using System;
-using System.IO;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RotateTest : MonoBehaviour
