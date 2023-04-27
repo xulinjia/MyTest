@@ -24,7 +24,16 @@ namespace ErisGame
             data = new byte[1024];
         }
     }
-
+    /// <summary>
+    /// 发起消息缓存队列数据
+    /// </summary>
+    public class SendMsgCacheQueueData
+    {
+        public NetMsgID msgId;
+        public byte[] datas;
+        public bool isWaitReplay = false;//是否等待回复
+        public int msgNum;//客户端序列号
+    }
     #region 辅助类
     public class StateObject
     {
@@ -149,6 +158,7 @@ namespace ErisGame
         public void Dispose()
         {
             reciveMsgs.Clear();
+            logic_sendCache.Clear();
         }
 
         protected override void OnUpdate()
@@ -167,13 +177,15 @@ namespace ErisGame
         {
             try
             {
-                serverUri = new Uri("ws://localhost:4649/Chat");
+                reciveMsgs.Clear();
+                logic_sendCache.Clear();
+                serverUri = new Uri("ws://43.143.36.51:8555");
                 webSocket = new ClientWebSocket();
                 await webSocket.ConnectAsync(serverUri, CancellationToken.None);
                 if (webSocket.State == WebSocketState.Open)
                 {
                     Debug.LogError("连接成功！");
-                    startHeartBeat();
+                    //startHeartBeat();
                     await ReceiveMessage();
                 }
             }
@@ -272,7 +284,8 @@ namespace ErisGame
             sendBuffer.AddRange(SerializaBuffer.Int32ToBytes(System.Net.IPAddress.HostToNetworkOrder(sendMsgNum)));
             //消息体数据
             sendBuffer.AddRange(byte_msgData);
-            await sendMessageAsync(sendBuffer.ToArray());
+            Debug.LogError(string.Format("{0}:::{1}",netMsgId,msgData));
+            await sendMessageAsync(netMsgId, sendBuffer.ToArray(), sendMsgNum); ;
         }
 
         private void startHeartBeat()
@@ -315,41 +328,85 @@ namespace ErisGame
             }
         }
 
-        private async Task sendMessageAsync(byte[] message)
+        private async Task sendMessageAsync(NetMsgID msgId, byte[] datas, int msgNum)
         {
-
+            //保存到发送队列中，依次发送
+            SendMsgCacheQueueData cache = new SendMsgCacheQueueData();
+            cache.datas = datas;
+            cache.msgId = msgId;
+            cache.msgNum = msgNum;
+            logic_sendCache.Add(cache);
+            await _sendMessageAsync();
+        }
+        private async Task _sendMessageAsync()
+        {
+            if (logic_sendCache.Count <= 0)
+            {
+                return;
+            }
+            SendMsgCacheQueueData data = null;
+            for (int i = 0; i < logic_sendCache.Count; i++)
+            {
+                if (!logic_sendCache[i].isWaitReplay)
+                {
+                    data = logic_sendCache[i];
+                    logic_sendCache[i].isWaitReplay = true;
+                    break;
+                }
+            }
+            byte[] message = data.datas;
             if (webSocket.State != WebSocketState.Open)
             {
                 //await webSocket.ConnectAsync(serverUri, CancellationToken.None);
             }
             else if ((webSocket.State == WebSocketState.Open))
             {
-               await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
+                try
+                {
+                    await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogErrorFormat("发送失败 msgId: {0}\n{1}", data.msgId, ex.Message);
+                    return;
+                }
             }
         }
         //消息处理
         //消息ID，服务器序列号，客户端序列号
         public void MessageDispatch(NetMsgID msgId, byte[] msgData)
         {
-
+            RemoveSendCache(msgId);
             //string s = "CenterMsg.C2G_Login";
             //Type t = System.Type.GetType(s,false,true);
             //Debug.LogError(t.FullName);
             //Debug.LogError(Deserialize<t>(msgData));
             IMessage message;
-            if (msgId == NetMsgID.C2G_Login)
+            if (msgId == NetMsgID.G2C_Login)
             {
-                message = SerializaBuffer.Deserialize<C2G_Login>(msgData);
+                message = SerializaBuffer.Deserialize<G2C_Login>(msgData);
+                Debug.LogError(message);
+                //startHeartBeat();
+            }
+            if (msgId == NetMsgID.G2C_CreatePlayer)
+            {
+                message = SerializaBuffer.Deserialize<G2C_CreatePlayer>(msgData);
+                Debug.LogError(message);
+                //startHeartBeat();
+            }
+            if (msgId == NetMsgID.G2C_HeartBeat)
+            {
+                message = SerializaBuffer.Deserialize<G2C_HeartBeat>(msgData);
                 Debug.LogError(message);
             }
-            
+            SendNextMsg();
         }
 
         private async Task ReceiveMessage()
         {
             while (true)
             {
-                //Debug.LogError("ReceiveMessage");
+                Debug.LogError("ReceiveMessage");
                 //网络断开时，跳出循环
                 if (webSocket.State != WebSocketState.Open)
                 {
@@ -361,6 +418,7 @@ namespace ErisGame
                 //消息为结束消息是，断开网络并跳出循环
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
+                    Debug.LogError("网络已断开");
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                     return;
                 }
@@ -384,6 +442,38 @@ namespace ErisGame
                 }
             }
         }
+        public void RemoveSendCache(NetMsgID netMsgID)
+        {
+            for (int i = 0; i < logic_sendCache.Count; i++)
+            {
+                NetMsgID resMsgID;
+                if (MessageDefine.ReqAndRes.TryGetValue(logic_sendCache[i].msgId, out resMsgID))
+                {
+                    if (logic_sendCache[i].isWaitReplay == true && netMsgID == resMsgID)
+                    {
+                        logic_sendCache.Remove(logic_sendCache[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        public void SendNextMsg()
+        {
+            bool isExist = false;
+            for (int i = 0; i < logic_sendCache.Count; i++)
+            {
+                if (!logic_sendCache[i].isWaitReplay)
+                {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist)
+            {
+                return;
+            }
+            _sendMessageAsync().Wait();
+        }
 
         private Uri serverUri;
         private static ClientWebSocket webSocket;
@@ -400,6 +490,8 @@ namespace ErisGame
         private List<byte> sendBuffer = new List<byte>();
         private int serverMsgNum = 1;//服务器下发的 消息序列号
         private int sendMsgNum = 10000; //发送消息序列号
+        private List<SendMsgCacheQueueData> logic_sendCache = new List<SendMsgCacheQueueData>();
+
         private bool isStopReadBuffer = false;
 
         //消息回调字典，按NetMsgID为索引，保存对应对象的回调列表
