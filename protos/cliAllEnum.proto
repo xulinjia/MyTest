@@ -52,7 +52,6 @@ enum ItemType{
 	Item_Gift = 51;//礼物
 	Item_Sub_GM_YueKa = 52;//GM物品 相当于月卡充值成功
 	Item_Sub_GM_ZhanLing = 53;//GM物品 相当于战令充值成功
-	Item_Handcard=54;//手牌
 }
 
 
@@ -69,10 +68,10 @@ enum ItemQuality{
 
 enum HeroQuality{
 	HQuality_None = 0;
-	HQuality_A = 1;
-	HQuality_S = 2;
-	HQuality_SS = 3;
-	HQuality_SSS = 4;
+	HQuality_R = 1;
+	HQuality_SR = 2;
+	HQuality_SSR = 3;
+	HQuality_UR = 4;
 }
 
 enum HeroType{
@@ -551,7 +550,6 @@ enum QuestDetailType{
 	QDT_PeriodActAchievement = 12;
 	QDT_SevenDayRankQuest = 13;
 	QDT_WorldMatchDailyQuest = 14;
-	QDT_WeekQuest = 15;//周常
 }
 
 //活跃值系统类型
@@ -577,7 +575,7 @@ enum RankType{
 	RankType_PlayerHandbook = 3; // 图鉴等级
 	RankType_PlayerLevel = 4; // 玩家等级排行
 	RankType_Trial = 5; // 无尽试炼
-
+	RankType_SanXiao = 6;// 三消能力排行
 	RankType_ClimbTower = 7;//爬塔排行
     RankType_Arena = 8;//竞技场排行
 	RankType_Main = 9;//主线
@@ -598,7 +596,25 @@ enum RankType{
 	RankType_SevenDay_PlayerFight= 24;//决战七日玩家战力排行 包含机器人
 	RankType_SevenDay_PlayerAwaken= 25;//决战七日玩家觉醒排行 包含机器人
 
-
+	
+	RankType_SanXiaoBaoDianLevelFriend = 30;//三消宝典关卡好友排名
+	RankType_SanXiaoBaoDianLevelServer = 31;//三消宝典关卡全服排名
+	RankType_SanXiaoBaoDianAllLevel = 32;//三消宝典消除排名
+	RankType_SanXiaoBaoDianAchievement = 33;//三消宝典成就排名
+	RankType_SanXiaoBaoDianTotal = 34;//三消宝典总排名
+	RankType_SanXiaoBaoDianElfCount = 35;//三消宝典星君总数
+	RankType_SanXiaoBaoDianBlockCount = 36;//三消宝典珠子总数
+	RankType_SanXiaoBaoDianTotalSkillCount = 37;//三消宝典技能总数
+	RankType_SanXiaoBaoDianWoodCount = 38;//三消宝典木箱子总数
+	RankType_SanXiaoBaoDianCoralCount = 39;//三消宝典泥砖总数
+	RankType_SanXiaoBaoDianStoneCount = 40;//三消宝典石块总数
+	RankType_SanXiaoBaoDianGrassCount = 41;//三消宝典草皮总数
+	RankType_SanXiaoBaoDianIceCount = 42;//三消宝典冰块总数
+	RankType_SanXiaoBaoDian_Single_MaxSkillCount = 43;//三消宝典单场最大技能数
+	RankType_SanXiaoBaoDian_Single_MaxBlockCount = 44;//单场消除珠子数量
+	RankType_SanXiaoBaoDian_Single_MaxScore = 45;//单场最高分
+	RankType_SanXiaoBaoDian_Single_RemainStepCount = 46;//单场最多剩余步数
+	RankType_SanXiaoBaoDian_Single_BOOM_F = 47;//5连_炉子
 	
 	RankType_RobotPlayerTotalFighting = 50; // 机器人玩家总战力排行 (上阵战力)
 	RankType_Recommend_PlayerLevel = 51; // 玩家推荐等级排行
@@ -663,7 +679,7 @@ enum SystemOpenType
 	SOT_RANKLEVEL = 33;
 	SOT_RANKARENA = 34;
 	SOT_RANKMAIN  = 35;
-
+	SOT_RANKSANXIAO = 36;
 	SOT_RANKCLIMBTOWER = 37;
 	SOT_RANKTOPFOUR = 38;
 	SOT_EXPEDITION = 41; //远游
@@ -840,15 +856,17 @@ enum ExpeditionState {
 	ExpeditionState_Fail = 5; // 失败
 }
 
-//阵营
-enum GroupType
+//种族
+enum DescentType
 {
-	GroupType_None = 0;
-	GroupType_Wei = 1;//魏
-	GroupType_Shu = 2;//蜀
-	GroupType_Wu = 3;//魔
-	GroupType_Qun = 4;//吴
-	GroupType_Limit = 5; // 群
+	DescentType_None = 0;
+	DescentType_Ghost = 1;//鬼
+	DescentType_Demon = 2;//妖
+	DescentType_Evil = 3;//魔
+	DescentType_Spirit = 4;//神
+	DescentType_Buddha = 5;//佛
+	DescentType_Human = 6;//人
+	DescentType_LIMIT = 7; // 限制
 }
 
 // 公会建筑类型

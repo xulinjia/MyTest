@@ -169,7 +169,7 @@ namespace ErisGame
                 for (int i = 0; i < count; i++)
                 {
                     MessageData message = reciveMsgs.Dequeue();//队列第一个添加的数据
-                    MessageDispatch(message.packetId, message.data);
+                    NetMsgCallbacks.MessageDispatchAsync(message.packetId, message.data);
                 }
             }
         }
@@ -185,8 +185,7 @@ namespace ErisGame
                 if (webSocket.State == WebSocketState.Open)
                 {
                     Debug.LogError("连接成功！");
-                    //startHeartBeat();
-                    await ReceiveMessage();
+                    ReceiveMessage();
                 }
             }
             catch (Exception ex)
@@ -195,6 +194,13 @@ namespace ErisGame
             }
         }
 
+        public void DisConnectAsync()
+        {
+            if (webSocket.State == WebSocketState.Open)
+            {
+                webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+            }
+        }
         //注册消息
         //public void RegCallbackFuncT<T>(NetMsgID msgId, object obj, NetMsgCallbackFuncT<T> msgCallback) where T : IMessage, new()
         //{
@@ -259,9 +265,9 @@ namespace ErisGame
         //发送消息
         public async Task SendMessageAsync(NetMsgID netMsgId)
         {
-            await SendMessageAsync(netMsgId,null);
+            SendMessageAsync(netMsgId,null);
         }
-        public async Task SendMessageAsync(NetMsgID netMsgId, IMessage msgData)
+        public void SendMessageAsync(NetMsgID netMsgId, IMessage msgData)
         {
 
             short short_msgId = (short)netMsgId;
@@ -284,11 +290,11 @@ namespace ErisGame
             sendBuffer.AddRange(SerializaBuffer.Int32ToBytes(System.Net.IPAddress.HostToNetworkOrder(sendMsgNum)));
             //消息体数据
             sendBuffer.AddRange(byte_msgData);
-            Debug.LogError(string.Format("{0}:::{1}",netMsgId,msgData));
-            await sendMessageAsync(netMsgId, sendBuffer.ToArray(), sendMsgNum); ;
+            Debug.Log(string.Format("{0}:::{1}",netMsgId,msgData));
+            sendMessageAsync(netMsgId, sendBuffer.ToArray(), sendMsgNum); ;
         }
 
-        private void startHeartBeat()
+        public void StartHeartBeat()
         {
             Debug.Log("心跳:" + enableHeartBeat);
             if (enableHeartBeat)
@@ -328,7 +334,7 @@ namespace ErisGame
             }
         }
 
-        private async Task sendMessageAsync(NetMsgID msgId, byte[] datas, int msgNum)
+        private void sendMessageAsync(NetMsgID msgId, byte[] datas, int msgNum)
         {
             //保存到发送队列中，依次发送
             SendMsgCacheQueueData cache = new SendMsgCacheQueueData();
@@ -336,9 +342,9 @@ namespace ErisGame
             cache.msgId = msgId;
             cache.msgNum = msgNum;
             logic_sendCache.Add(cache);
-            await _sendMessageAsync();
+            _sendMessageAsync();
         }
-        private async Task _sendMessageAsync()
+        private void _sendMessageAsync()
         {
             if (logic_sendCache.Count <= 0)
             {
@@ -363,7 +369,8 @@ namespace ErisGame
             {
                 try
                 {
-                    await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
+                    Debug.Log(string.Format("{0}:::isWaitReplay:{1}", data.msgId, data.isWaitReplay));
+                    webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
                 }
                 catch (Exception ex)
                 {
@@ -372,41 +379,12 @@ namespace ErisGame
                 }
             }
         }
-        //消息处理
-        //消息ID，服务器序列号，客户端序列号
-        public void MessageDispatch(NetMsgID msgId, byte[] msgData)
-        {
-            RemoveSendCache(msgId);
-            //string s = "CenterMsg.C2G_Login";
-            //Type t = System.Type.GetType(s,false,true);
-            //Debug.LogError(t.FullName);
-            //Debug.LogError(Deserialize<t>(msgData));
-            IMessage message;
-            if (msgId == NetMsgID.G2C_Login)
-            {
-                message = SerializaBuffer.Deserialize<G2C_Login>(msgData);
-                Debug.LogError(message);
-                //startHeartBeat();
-            }
-            if (msgId == NetMsgID.G2C_CreatePlayer)
-            {
-                message = SerializaBuffer.Deserialize<G2C_CreatePlayer>(msgData);
-                Debug.LogError(message);
-                //startHeartBeat();
-            }
-            if (msgId == NetMsgID.G2C_HeartBeat)
-            {
-                message = SerializaBuffer.Deserialize<G2C_HeartBeat>(msgData);
-                Debug.LogError(message);
-            }
-            SendNextMsg();
-        }
+
 
         private async Task ReceiveMessage()
         {
             while (true)
             {
-                Debug.LogError("ReceiveMessage");
                 //网络断开时，跳出循环
                 if (webSocket.State != WebSocketState.Open)
                 {
@@ -472,7 +450,7 @@ namespace ErisGame
             {
                 return;
             }
-            _sendMessageAsync().Wait();
+            _sendMessageAsync();
         }
 
         private Uri serverUri;

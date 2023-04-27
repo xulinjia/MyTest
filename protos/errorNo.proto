@@ -73,15 +73,15 @@ enum ErrorNo{
 	SurpassPlayerLv = 79;//不能超过玩家的等级
 	FailedToRefreshKTPShop = 80;//失败的刷新开天牌商店
 	NotFinishTowerLevel = 81;//没有完成爬塔关卡
-
+	FailedToCheckSanXiao = 82;//三消检测失败
 	EmbattleHeroLimit = 83;//进入战斗的英雄抄错配置
 	NotEnoughKTCoin = 84; //没有足够开天币
 	FailedToGodLevelUp = 85; //神器升级失败
 	OppoentRankInvalid = 86; //对手的排名已经更改
 	NotFoundBattleVideo = 87; //没有找到战斗录像
 	InvalidItemType = 88; //神器升级失败
-	GetChapterBoxFail=89;//领取章节宝箱失败
-
+	InvalidSanXiaoKey = 89; //无效的三消Key
+	FailedSaveSanXiao = 90;//失败的保存三消结果
 	FailedReconnnect = 91;//重连失败
 	NotFoundStoreItem = 92;//没有找到上架的商品
 	NotEnoughConsumeItem = 93;//没有足够的消耗品
@@ -522,15 +522,6 @@ enum ErrorNo{
 	LevelAwardNoExist = 543; // 等级奖励不存在
 	ComposeItemCostCfgError = 544; // 密卷合成消耗配置错误
 	VoucherItemNoEnough = 545; // 代金券不足
-	HandCardCfgNotExist = 546;//手牌配置不存在
-	HandCardPositionCfgNotExist = 547;//手牌位孔配置不存在
-	HandCardPositionNotUnLocked = 548;//位孔未解锁
-	HandCardTypeLimit = 549;//装备手牌类型错误
-	HandCardPositionNotHaveHero = 550;//此位孔无英雄
-	HandCardAlreadyAtTheHighestLevel=560;//手牌已达最高等级
-	HandCardUpLevelNotEnough = 561;//手牌合成数量不够
-	HandCardCurPositionNotHC = 562;//当前位孔无手牌
-	HandCardNotExist = 563;//手牌不存在
 
 	SensitiveWords=1000;//敏感字
 }

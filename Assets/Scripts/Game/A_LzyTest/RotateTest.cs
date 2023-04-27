@@ -24,7 +24,7 @@ public class RotateTest : MonoBehaviour
     }
     private void OnABtn()
     {
-        Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_CreatePlayer, new C2G_CreatePlayer() { AccountId = "1001", PlayerName = "Íæ¼Ò1001", MainPlayerID = 1 });
+;       Managers.GetNetManager().DisConnectAsync();
     }
     private void OnBBtn()
     {
@@ -37,7 +37,7 @@ public class RotateTest : MonoBehaviour
     private async void onTestSendBtn()
     {
         string sendMsg = sengText.text;
-        await Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_Login, new C2G_Login() {AccountId = "1001", PassWd = "password"});
+        Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_Login, new C2G_Login() {AccountId = "1005", PassWd = "password"});
     }
     private void onTestLoginBtn()
     {
