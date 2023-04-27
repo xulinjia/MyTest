@@ -427,7 +427,7 @@ namespace ErisGame
                 NetMsgID resMsgID;
                 if (MessageDefine.ReqAndRes.TryGetValue(logic_sendCache[i].msgId, out resMsgID))
                 {
-                    if (logic_sendCache[i].isWaitReplay == true && netMsgID == resMsgID)
+                    if (logic_sendCache[i].isWaitReplay == true && (netMsgID == resMsgID || logic_sendCache[i].msgId == heartMsgId))
                     {
                         logic_sendCache.Remove(logic_sendCache[i]);
                         break;

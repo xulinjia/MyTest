@@ -19,12 +19,11 @@ public class RotateTest : MonoBehaviour
 
         btn_A = transform.Find("btn_A").GetComponent<Button>();
         btn_A.onClick.AddListener(OnABtn);
-        btn_B = transform.Find("btn_A").GetComponent<Button>();
+        btn_B = transform.Find("btn_B").GetComponent<Button>();
         btn_B.onClick.AddListener(OnBBtn);
     }
     private void OnABtn()
     {
-;       Managers.GetNetManager().DisConnectAsync();
     }
     private void OnBBtn()
     {
@@ -37,7 +36,7 @@ public class RotateTest : MonoBehaviour
     private async void onTestSendBtn()
     {
         string sendMsg = sengText.text;
-        Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_Login, new C2G_Login() {AccountId = "1005", PassWd = "password"});
+        Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_Login, new C2G_Login() {AccountId = "1006", PassWd = "password"});
     }
     private void onTestLoginBtn()
     {

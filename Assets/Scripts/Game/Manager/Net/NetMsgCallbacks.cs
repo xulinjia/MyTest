@@ -32,7 +32,9 @@ namespace ErisGame
                 else
                 {
                     Managers.GetNetManager().SendMessageAsync(NetMsgID.C2G_PlayerLogin,
-                        new C2G_PlayerLogin() { PlayerId = message.CreatedPlayer[0].PlayerId,
+                        new C2G_PlayerLogin()
+                        {
+                            PlayerId = message.CreatedPlayer[0].PlayerId,
                             AccountId = message.AccountId,
                             LoginKey = message.LoginKey,
                         });
@@ -59,6 +61,21 @@ namespace ErisGame
                     Managers.GetNetManager().StartHeartBeat();
                 }
 
+            }
+            if (msgId == NetMsgID.G2C_SyncPlayerDisplayInfo)
+            {
+                G2C_SyncPlayerDisplayInfo message = SerializaBuffer.Deserialize<G2C_SyncPlayerDisplayInfo>(msgData);
+                Debug.LogError(message);
+            }
+
+            if (msgId == NetMsgID.G2C_GetBagInfoRes) 
+            {
+                G2C_GetBagInfoRes message = SerializaBuffer.Deserialize<G2C_GetBagInfoRes>(msgData);
+                Debug.LogError(message);
+            }
+            if (msgId == NetMsgID.G2C_PlayerDataSyncFinish) 
+            { 
+                Debug.LogError("G2C_PlayerDataSyncFinish接收");
             }
             if (msgId == NetMsgID.G2C_HeartBeat)
             {
