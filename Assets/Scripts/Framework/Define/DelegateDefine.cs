@@ -26,7 +26,4 @@ namespace GreyFramework
     public delegate void OnAllocBuffer(out byte[] buffer, long len);
     public delegate void OnFreeBuffer(ref byte[] buffer);
 
-    //网络回调注册
-    public delegate void NetMsgCallbackFunc(IMessage message);
-    public delegate void NetMsgCallbackFuncT<T>(T message) where T : IMessage, new();
 }

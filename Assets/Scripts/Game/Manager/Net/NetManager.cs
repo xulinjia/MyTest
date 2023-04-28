@@ -180,6 +180,7 @@ namespace ErisGame
                 reciveMsgs.Clear();
                 logic_sendCache.Clear();
                 serverUri = new Uri("ws://43.143.36.51:8555");
+                //serverUri = new Uri("ws://localhost:4649/Chat");
                 webSocket = new ClientWebSocket();
                 await webSocket.ConnectAsync(serverUri, CancellationToken.None);
                 if (webSocket.State == WebSocketState.Open)
@@ -201,67 +202,7 @@ namespace ErisGame
                 webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
         }
-        //注册消息
-        //public void RegCallbackFuncT<T>(NetMsgID msgId, object obj, NetMsgCallbackFuncT<T> msgCallback) where T : IMessage, new()
-        //{
-        //    Dictionary<object, ArrayList> callbackDic;
-        //    ArrayList arrayList;
-        //    if (recCallBacks.TryGetValue(msgId, out callbackDic))
-        //    {
-        //        if (callbackDic.TryGetValue(obj,out arrayList))
-        //        {
-        //            if (!arrayList.Contains(msgCallback))
-        //            {
-        //                //已经存在相同回调，直接返回
-        //                return;
-        //            }
-        //            arrayList.Add(msgCallback);
-        //        }
-        //        else
-        //        {
-        //            arrayList = new ArrayList();
-        //            arrayList.Add(msgCallback);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        callbackDic = new Dictionary<object, ArrayList>();
-        //        arrayList = new ArrayList();
-        //        arrayList.Add(msgCallback);
-        //        callbackDic.Add(obj, arrayList);
-        //        recCallBacks.Add(msgId, callbackDic);
-        //    }
-        //}
-        ////public void RegCallbackFunc(NetMsgID msgId, object obj, NetMsgCallbackFunc msgCallback)
-        ////注销消息
-        //public void UnRegCallbackFuncT<T>(NetMsgID msgId, object obj, NetMsgCallbackFuncT<T> msgCallback) where T : IMessage, new()
-        //{
-        //    Dictionary<object, ArrayList> callbackDic;
-        //    ArrayList arrayList;
-        //    if (recCallBacks.TryGetValue(msgId, out callbackDic))
-        //    {
-        //        if (callbackDic.TryGetValue(obj,out arrayList))
-        //        {
-        //            if (arrayList.Contains(msgCallback))
-        //            {
-        //                arrayList.Remove(msgCallback);
-        //            }
-        //        }
-        //    }
 
-        //}
-        ////注销对象所有消息
-        //public void UnRegAllCallbackFunc(object obj)
-        //{
-        //    ArrayList arrayList;
-        //    foreach (var item in recCallBacks)
-        //    {
-        //        if (item.Value.TryGetValue(obj,out arrayList))
-        //        {
-        //            item.Value.Remove(obj);
-        //        }
-        //    }
-        //}
         //发送消息
         public async Task SendMessageAsync(NetMsgID netMsgId)
         {
@@ -369,7 +310,7 @@ namespace ErisGame
             {
                 try
                 {
-                    Debug.Log(string.Format("{0}:::isWaitReplay:{1}", data.msgId, data.isWaitReplay));
+                    //Debug.Log(string.Format("{0}:::isWaitReplay:{1}", data.msgId, data.isWaitReplay));
                     webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Binary, true, CancellationToken.None);
                 }
                 catch (Exception ex)
@@ -472,9 +413,6 @@ namespace ErisGame
 
         private bool isStopReadBuffer = false;
 
-        //消息回调字典，按NetMsgID为索引，保存对应对象的回调列表
-        private Dictionary<NetMsgID,Dictionary<object, ArrayList>> recCallBacks = new Dictionary<NetMsgID,Dictionary<object, ArrayList>>();
-        
         //每次发送消息前都要保存下发的消息，用来处理断线重连或者发送超时后的补发情况
         //补发根据填充的数据顺序进行补发
         //private List<SendMsgCacheQueueData> logic_sendCache = new List<SendMsgCacheQueueData>();

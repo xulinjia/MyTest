@@ -18,7 +18,32 @@ namespace ErisGame
             //Debug.LogError(t.FullName);
             //Debug.LogError(Deserialize<t>(msgData));
 
-            if (msgId == NetMsgID.G2C_Login)
+
+            if (msgId == NetMsgID.G2C_GMResponse)
+            {
+                G2C_GMResponse message = SerializaBuffer.Deserialize<G2C_GMResponse>(msgData);
+                Debug.LogError("G2C_GMResponse，gm消息接收");
+                Debug.LogError(message);
+            }
+            else if (msgId == NetMsgID.G2C_HeartBeat)
+            {
+
+                G2C_HeartBeat message = SerializaBuffer.Deserialize<G2C_HeartBeat>(msgData);
+                if (message.SrvTimeTs == 0)
+                {
+                    Debug.LogError("G2C_HeartBeat心跳包接收！");
+                }
+            }
+            else if (msgId == NetMsgID.G2C_OfflineNTfRes)
+            {
+
+                G2C_OfflineNTfRes message = SerializaBuffer.Deserialize<G2C_OfflineNTfRes>(msgData);
+                if (message.Err == 0)
+                {
+                    Debug.LogError(msgData);
+                }
+            }
+            else if (msgId == NetMsgID.G2C_Login)
             {
                 G2C_Login message = SerializaBuffer.Deserialize<G2C_Login>(msgData);
                 //Debug.LogError("G2C_Login");
@@ -40,7 +65,7 @@ namespace ErisGame
                         });
                 }
             }
-            if (msgId == NetMsgID.G2C_CreatePlayer)
+            else if (msgId == NetMsgID.G2C_CreatePlayer)
             {
                 //Debug.LogError("G2C_CreatePlayer");
                 G2C_CreatePlayer message = SerializaBuffer.Deserialize<G2C_CreatePlayer>(msgData);
@@ -50,7 +75,7 @@ namespace ErisGame
                     Debug.Log("创角成功");
                 }
             }
-            if (msgId == NetMsgID.G2C_PlayerLogin)
+            else if (msgId == NetMsgID.G2C_PlayerLogin)
             {
                 //Debug.LogError("G2C_PlayerLogin");
                 G2C_PlayerLogin message = SerializaBuffer.Deserialize<G2C_PlayerLogin>(msgData);
@@ -62,29 +87,20 @@ namespace ErisGame
                 }
 
             }
-            if (msgId == NetMsgID.G2C_SyncPlayerDisplayInfo)
+            else if (msgId == NetMsgID.G2C_SyncPlayerDisplayInfo)
             {
                 G2C_SyncPlayerDisplayInfo message = SerializaBuffer.Deserialize<G2C_SyncPlayerDisplayInfo>(msgData);
                 Debug.LogError(message);
             }
 
-            if (msgId == NetMsgID.G2C_GetBagInfoRes) 
+            else if (msgId == NetMsgID.G2C_GetBagInfoRes) 
             {
                 G2C_GetBagInfoRes message = SerializaBuffer.Deserialize<G2C_GetBagInfoRes>(msgData);
                 Debug.LogError(message);
             }
-            if (msgId == NetMsgID.G2C_PlayerDataSyncFinish) 
+            else if (msgId == NetMsgID.G2C_PlayerDataSyncFinish) 
             { 
                 Debug.LogError("G2C_PlayerDataSyncFinish接收");
-            }
-            if (msgId == NetMsgID.G2C_HeartBeat)
-            {
-                Debug.LogError("G2C_HeartBeat");
-                G2C_HeartBeat message = SerializaBuffer.Deserialize<G2C_HeartBeat>(msgData);
-                if (message.SrvTimeTs == 0)
-                {
-                    Debug.LogError("心跳包接收！");
-                }
             }
             Managers.GetNetManager().SendNextMsg();
         }
